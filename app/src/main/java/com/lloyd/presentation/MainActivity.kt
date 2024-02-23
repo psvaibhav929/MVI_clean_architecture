@@ -19,7 +19,7 @@ import com.lloyd.presentation.dog_details.DogDetailsScreen
 import com.lloyd.presentation.dog_details.DogDetailsViewModel
 import com.lloyd.presentation.dog_list.DogListScreen
 import com.lloyd.presentation.dog_list.DogListViewModel
-import com.lloyd.presentation.ui.theme.VirtusaTestTheme
+import com.lloyd.presentation.ui.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         setContent {
-            VirtusaTestTheme {
+            MainActivityTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
