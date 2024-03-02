@@ -19,7 +19,7 @@ import com.lloyd.common.Screen
 import com.lloyd.features_animal_details.DogDetailsScreen
 import com.lloyd.features_animal_details.DogDetailsViewModel
 import com.lloyd.features_animal_list.DogListScreen
-import com.lloyd.features_animal_list.DogListViewModel
+import com.lloyd.features_animal_list.viewmodel.DogListViewModel
 import com.lloyd.presentation.ui.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.DogListScreen.route
                     ) {
-                        val dogListViewModel:  DogListViewModel by viewModels<DogListViewModel>()
+                        val dogListViewModel: DogListViewModel by viewModels<DogListViewModel>()
                         composable(
                             route = Screen.DogListScreen.route
                         ) {

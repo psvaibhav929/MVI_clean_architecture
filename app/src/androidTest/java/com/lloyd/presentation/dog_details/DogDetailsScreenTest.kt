@@ -5,6 +5,9 @@ import androidx.activity.viewModels
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.lloyd.features_animal_details.DogDetailsScreen
+import com.lloyd.features_animal_details.DogDetailsViewModel
+import com.lloyd.features_animal_details.TEST_TAG_DOG_DETAILS_SCREEN
 import com.lloyd.presentation.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -32,12 +35,12 @@ class DogDetailsScreenTest {
     @Test
     fun check_DogDetailsScreen_exists() {
         composeTestRule.activity.setContent {
-            com.lloyd.features_animal_details.DogDetailsScreen(
+            DogDetailsScreen(
                 dogBreedName = "affenpinscher",
                 dogFullName = "Affenpinscher",
-                viewModel = composeTestRule.activity.viewModels<com.lloyd.features_animal_details.DogDetailsViewModel>().value
+                viewModel = composeTestRule.activity.viewModels<DogDetailsViewModel>().value
             )
         }
-        composeTestRule.onNodeWithTag(com.lloyd.features_animal_details.TEST_TAG_DOG_DETAILS_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(TEST_TAG_DOG_DETAILS_SCREEN).assertExists()
     }
 }

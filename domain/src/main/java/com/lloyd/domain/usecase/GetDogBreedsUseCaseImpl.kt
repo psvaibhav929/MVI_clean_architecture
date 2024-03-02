@@ -1,5 +1,6 @@
 package com.lloyd.domain.usecase
 
+import com.lloyd.common.ErrorFactory
 import com.lloyd.common.Result
 import com.lloyd.domain.repository.dto.toDogBreed
 import com.lloyd.domain.di.IoDispatcher
@@ -23,18 +24,10 @@ class GetDogBreedsUseCaseImpl @Inject constructor(
             emit(Result.Loading())
             val dogBreeds = dogBreedRepository.getDogBreeds()
             emit(Result.Success(dogBreeds.toDogBreed()))
-        } catch (e: HttpException) {
-            emit(
-                Result.Error(
-                    message = e.localizedMessage ?: "An unexpected error occurred"
-                )
-            )
-        } catch (e: IOException) {
-            emit(
-                Result.Error(
-                    message = "Couldn't reach server. Check your internet connection."
-                )
-            )
+        }
+        catch (e: Exception) {
+            val errorMessage = ErrorFactory.getErrorMessage(e)
+            emit(Result.Error(errorMessage))
         }
     }.flowOn(ioDispatcher)
 }

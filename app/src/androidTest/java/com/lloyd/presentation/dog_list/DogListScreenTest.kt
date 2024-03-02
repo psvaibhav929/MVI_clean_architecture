@@ -6,6 +6,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.lloyd.features_animal_list.DogListScreen
+import com.lloyd.features_animal_list.viewmodel.DogListViewModel
+import com.lloyd.features_animal_list.TEST_TAG_DOG_LIST_SCREEN
 import com.lloyd.presentation.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -32,11 +35,11 @@ class DogListScreenTest {
     @Test
     fun check_DogListScreen_exists() {
         composeTestRule.activity.setContent {
-            com.lloyd.features_animal_list.DogListScreen(
+             DogListScreen(
                 navController = rememberNavController(),
-                viewModel = composeTestRule.activity.viewModels<com.lloyd.features_animal_list.DogListViewModel>().value
+                viewModel = composeTestRule.activity.viewModels<DogListViewModel>().value
             )
         }
-        composeTestRule.onNodeWithTag(com.lloyd.features_animal_list.TEST_TAG_DOG_LIST_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(TEST_TAG_DOG_LIST_SCREEN).assertExists()
     }
 }

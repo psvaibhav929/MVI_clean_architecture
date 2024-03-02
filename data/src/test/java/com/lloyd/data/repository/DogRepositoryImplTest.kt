@@ -1,9 +1,9 @@
 package com.lloyd.data.repository
 
+import com.lloyd.data.mockdata.fetchDogBreedsMockData
+import com.lloyd.data.mockdata.fetchDogDetailsMockData
 import com.lloyd.data.remote.DogApi
 import com.lloyd.domain.repository.DogRepository
-import com.lloyd.mockdata.fetchDogBreedsMockData
-import com.lloyd.mockdata.fetchDogDetailsMockData
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -14,14 +14,14 @@ import org.junit.Before
 import org.junit.Test
 
 class DogRepositoryImplTest {
-    private var dogApi: com.lloyd.data.remote.DogApi = mockk()
-    private lateinit var dogRepository: com.lloyd.domain.repository.DogRepository
+    private var dogApi: DogApi = mockk()
+    private lateinit var dogRepository: DogRepository
 
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogRepository = com.lloyd.data.repository.DogRepositoryImpl(dogApi)
+        dogRepository = DogRepositoryImpl(dogApi)
     }
 
     @After

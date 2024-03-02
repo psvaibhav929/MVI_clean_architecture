@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import com.lloyd.features_animal_details.viewstate.DogDetailsViewState
+import com.lloyd.features_animal_list.intent.DogDetailsIntent
 
 const val TEST_TAG_DOG_DETAILS_SCREEN = "dog_details_screen"
 
@@ -36,12 +38,21 @@ fun DogDetailsScreen(
 ) {
     LaunchedEffect(key1 = null, block = {
         dogBreedName?.let {
-            viewModel.getDogDetailsByBreedName(it)
+            viewModel.sendIntent(DogDetailsIntent.GetDogDetails(it))
         }
     })
 
     val state = viewModel.dogDetailsState.collectAsStateWithLifecycle().value
-    val painter = rememberAsyncImagePainter(model = state.dogImageUrl)
+    if (state is DogDetailsViewState.Success) {
+
+    }
+    val painter = rememberAsyncImagePainter(
+        model = if (state is DogDetailsViewState.Success) {
+            state.dogImageUrl
+        } else {
+            ""
+        }
+    )
 
     Box(
         modifier = Modifier
@@ -49,7 +60,7 @@ fun DogDetailsScreen(
             .fillMaxSize()
             .testTag(TEST_TAG_DOG_DETAILS_SCREEN)
     ) {
-        if (state.dogImageUrl.isNullOrBlank().not()) {
+        if (state is DogDetailsViewState.Success) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -82,9 +93,9 @@ fun DogDetailsScreen(
             }
         }
 
-        if (state.error.isNullOrBlank().not()) {
+        if (state is DogDetailsViewState.Error) {
             Text(
-                text = state.error.toString(),
+                text = state.message,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -93,7 +104,7 @@ fun DogDetailsScreen(
                     .align(Alignment.Center)
             )
         }
-        if (state.isLoading) {
+        if (state is DogDetailsViewState.Loading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }

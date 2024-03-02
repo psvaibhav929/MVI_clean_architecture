@@ -19,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -27,6 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.lloyd.common.Screen
+import com.lloyd.features_animal_list.intent.DogListIntent
+import com.lloyd.features_animal_list.viewmodel.DogListViewModel
+import com.lloyd.features_animal_list.viewstate.DogListViewState
 
 
 const val TEST_TAG_DOG_LIST_SCREEN = "dog_list_screen"
@@ -36,6 +40,12 @@ fun DogListScreen(
     navController: NavController,
     viewModel: DogListViewModel
 ) {
+
+    val dogListIntentChannel = viewModel.dogListIntent
+    LaunchedEffect(dogListIntentChannel) {
+        viewModel.sendIntent(DogListIntent.GetAnimalList)
+    }
+
     val state = viewModel.dogListState.collectAsStateWithLifecycle().value
     Box(
         modifier = Modifier
@@ -49,22 +59,24 @@ fun DogListScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            itemsIndexed(state.dogBreeds) { index, dogName ->
-                DogListItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    dogItemIndex = "${index + 1}",
-                    dogName = dogName,
-                    onItemClick = {
-                        navController.navigate(
-                            Screen.DogDetailScreen.route + "/${dogName.dogBreedName}" + "/${dogName.dogFullName}"
-                        )
-                    }
-                )
+            if (state is DogListViewState.Success) {
+                itemsIndexed(state.data) { index, dogName ->
+                    DogListItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        dogItemIndex = "${index + 1}",
+                        dogName = dogName,
+                        onItemClick = {
+                            navController.navigate(
+                                Screen.DogDetailScreen.route + "/${dogName.dogBreedName}" + "/${dogName.dogFullName}"
+                            )
+                        }
+                    )
+                }
             }
         }
-        if (state.error.isNullOrBlank().not()) {
+        if (state is DogListViewState.Error) {
             Text(
-                text = state.error.toString(),
+                text = state.message,
                 color = MaterialTheme.colorScheme.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -73,7 +85,7 @@ fun DogListScreen(
                     .align(Alignment.Center)
             )
         }
-        if (state.isLoading) {
+        if (state is DogListViewState.Loading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }

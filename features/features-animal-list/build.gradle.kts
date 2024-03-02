@@ -24,6 +24,7 @@ dependencies {
     implementation(Dep.coreKtx)
     implementation(Dep.lifecycleRuntime)
     implementation(Dep.coil)
+    implementation(Retrofit.retrofitGson)
 
     compose()
 
