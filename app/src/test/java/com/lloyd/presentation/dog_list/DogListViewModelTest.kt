@@ -3,7 +3,7 @@ package com.lloyd.presentation.dog_list
 
 import com.lloyd.MainCoroutinesRule
 import com.lloyd.common.Result
-import com.lloyd.data.remote.dto.toDogBreed
+import com.lloyd.domain.repository.dto.toDogBreed
 import com.lloyd.domain.model.DogBreed
 import com.lloyd.domain.usecase.GetDogBreedsUseCase
 import com.lloyd.mockdata.fetchDogBreedsMockData
@@ -28,7 +28,7 @@ class DogListViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutinesRule()
 
-    private val getDogBreedsUseCase: GetDogBreedsUseCase = mockk(relaxed = true)
+    private val getDogBreedsUseCase: com.lloyd.domain.usecase.GetDogBreedsUseCase = mockk(relaxed = true)
     private lateinit var dogListViewModel: DogListViewModel
 
     @Before
@@ -77,7 +77,7 @@ class DogListViewModelTest {
     @Test
     fun `getDogBreeds loading`() = runTest {
         // Arrange
-        coEvery {getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Loading<DogBreed>()))
+        coEvery {getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Loading<com.lloyd.domain.model.DogBreed>()))
 
         // Act
         dogListViewModel.getDogBreeds()

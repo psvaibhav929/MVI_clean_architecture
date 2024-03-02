@@ -4,6 +4,6 @@ import com.lloyd.domain.model.DogName
 
 data class DogListState(
     val isLoading: Boolean = false,
-    val dogBreeds: List<DogName> = emptyList(),
+    val dogBreeds: List<com.lloyd.domain.model.DogName> = emptyList(),
     val error: String? = null
 )

@@ -83,7 +83,7 @@ fun DogListScreen(
 fun DogListItem(
     modifier: Modifier = Modifier,
     dogItemIndex: String,
-    dogName: DogName,
+    dogName: com.lloyd.domain.model.DogName,
     onItemClick: (String) -> Unit
 ) {
     Card(

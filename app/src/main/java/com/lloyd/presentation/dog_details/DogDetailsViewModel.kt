@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DogDetailsViewModel @Inject constructor(
-    private val getDogDetailsUseCase: GetDogDetailsUseCase,
+    private val getDogDetailsUseCase: com.lloyd.domain.usecase.GetDogDetailsUseCase,
 ) : ViewModel() {
     private var _dogDetailsState = MutableStateFlow(DogDetailsState())
     val dogDetailsState: StateFlow<DogDetailsState> = _dogDetailsState.asStateFlow()

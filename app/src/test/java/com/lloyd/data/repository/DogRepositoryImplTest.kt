@@ -14,14 +14,14 @@ import org.junit.Before
 import org.junit.Test
 
 class DogRepositoryImplTest {
-    private var dogApi: DogApi = mockk()
-    private lateinit var dogRepository: DogRepository
+    private var dogApi: com.lloyd.data.remote.DogApi = mockk()
+    private lateinit var dogRepository: com.lloyd.domain.repository.DogRepository
 
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogRepository = DogRepositoryImpl(dogApi)
+        dogRepository = com.lloyd.data.repository.DogRepositoryImpl(dogApi)
     }
 
     @After

@@ -25,8 +25,8 @@ import java.io.IOException
 
 class GetDogBreedsUseCaseImplTest {
     private val testDispatcher = StandardTestDispatcher()
-    private var dogRepository: DogRepository = mockk()
-    private lateinit var getDogBreedsUseCase: GetDogBreedsUseCase
+    private var dogRepository: com.lloyd.domain.repository.DogRepository = mockk()
+    private lateinit var getDogBreedsUseCase: com.lloyd.domain.usecase.GetDogBreedsUseCase
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -34,7 +34,8 @@ class GetDogBreedsUseCaseImplTest {
         MockKAnnotations.init(this, relaxUnitFun = true)
         Dispatchers.setMain(testDispatcher)
 
-        getDogBreedsUseCase = GetDogBreedsUseCaseImpl(dogRepository, testDispatcher)
+        getDogBreedsUseCase =
+            com.lloyd.domain.usecase.GetDogBreedsUseCaseImpl(dogRepository, testDispatcher)
     }
 
     @After
@@ -50,8 +51,8 @@ class GetDogBreedsUseCaseImplTest {
         coEvery { dogRepository.getDogBreeds() } returns fakeDogBreeds
 
         // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val result: MutableList<Result<com.lloyd.domain.model.DogBreed>> = mutableListOf()
+        val flow: Flow<Result<com.lloyd.domain.model.DogBreed>> = getDogBreedsUseCase.getDogBreeds()
 
         // Assert
         flow.collect {
@@ -70,8 +71,8 @@ class GetDogBreedsUseCaseImplTest {
         coEvery { dogRepository.getDogBreeds() } throws (HttpException(Response.success(null)))
 
         // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val result: MutableList<Result<com.lloyd.domain.model.DogBreed>> = mutableListOf()
+        val flow: Flow<Result<com.lloyd.domain.model.DogBreed>> = getDogBreedsUseCase.getDogBreeds()
 
         // Assert
         flow.collect {
@@ -89,8 +90,8 @@ class GetDogBreedsUseCaseImplTest {
         coEvery { dogRepository.getDogBreeds() } throws IOException()
 
         // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val result: MutableList<Result<com.lloyd.domain.model.DogBreed>> = mutableListOf()
+        val flow: Flow<Result<com.lloyd.domain.model.DogBreed>> = getDogBreedsUseCase.getDogBreeds()
 
         // Assert
         flow.collect {

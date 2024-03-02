@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "LLoyd"
 include(":app")
- 
+include(":common")
+include(":domain")
+include(":data")
