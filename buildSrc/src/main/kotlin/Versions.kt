@@ -5,6 +5,7 @@ object  Versions {
     const val coreKtx = "1.12.0"
     const val runtimeKtx = "2.7.0"
     const val coil = "2.5.0"
+    const val composeCompiler = "1.4.3"
     const val splashScreen = "1.0.1"
  }
 
