@@ -32,11 +32,11 @@ class DogListScreenTest {
     @Test
     fun check_DogListScreen_exists() {
         composeTestRule.activity.setContent {
-            DogListScreen(
+            com.lloyd.features_animal_list.DogListScreen(
                 navController = rememberNavController(),
-                viewModel = composeTestRule.activity.viewModels<DogListViewModel>().value
+                viewModel = composeTestRule.activity.viewModels<com.lloyd.features_animal_list.DogListViewModel>().value
             )
         }
-        composeTestRule.onNodeWithTag(TEST_TAG_DOG_LIST_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(com.lloyd.features_animal_list.TEST_TAG_DOG_LIST_SCREEN).assertExists()
     }
 }

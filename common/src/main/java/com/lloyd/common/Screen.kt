@@ -1,4 +1,4 @@
-package com.lloyd.presentation
+package com.lloyd.common
 
 sealed class Screen(val route: String) {
     object DogListScreen: Screen("dog_list_screen")

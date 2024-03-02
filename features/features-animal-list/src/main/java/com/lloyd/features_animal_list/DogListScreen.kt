@@ -1,4 +1,4 @@
-package com.lloyd.presentation.dog_list
+package com.lloyd.features_animal_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,8 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.lloyd.domain.model.DogName
-import com.lloyd.presentation.Screen
+import com.lloyd.common.Screen
+
 
 const val TEST_TAG_DOG_LIST_SCREEN = "dog_list_screen"
 

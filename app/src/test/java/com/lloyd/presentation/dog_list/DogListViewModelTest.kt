@@ -4,8 +4,6 @@ package com.lloyd.presentation.dog_list
 import com.lloyd.MainCoroutinesRule
 import com.lloyd.common.Result
 import com.lloyd.domain.repository.dto.toDogBreed
-import com.lloyd.domain.model.DogBreed
-import com.lloyd.domain.usecase.GetDogBreedsUseCase
 import com.lloyd.mockdata.fetchDogBreedsMockData
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -29,12 +27,12 @@ class DogListViewModelTest {
     val mainCoroutineRule = MainCoroutinesRule()
 
     private val getDogBreedsUseCase: com.lloyd.domain.usecase.GetDogBreedsUseCase = mockk(relaxed = true)
-    private lateinit var dogListViewModel: DogListViewModel
+    private lateinit var dogListViewModel: com.lloyd.features_animal_list.DogListViewModel
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogListViewModel = DogListViewModel(getDogBreedsUseCase)
+        dogListViewModel = com.lloyd.features_animal_list.DogListViewModel(getDogBreedsUseCase)
     }
 
     @After

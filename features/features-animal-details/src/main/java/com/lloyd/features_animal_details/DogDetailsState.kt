@@ -1,4 +1,4 @@
-package com.lloyd.presentation.dog_details
+package com.lloyd.features_animal_details
 
 data class DogDetailsState(
     val isLoading: Boolean = false,

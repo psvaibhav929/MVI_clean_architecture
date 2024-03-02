@@ -84,6 +84,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":features:features-animal-list"))
+    implementation(project(":features:features-animal-details"))
 
     implementation(Dep.coreKtx)
     implementation(Dep.lifecycleRuntime)

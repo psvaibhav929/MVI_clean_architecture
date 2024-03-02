@@ -1,4 +1,4 @@
-package com.lloyd.presentation.dog_details
+package com.lloyd.features_animal_details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

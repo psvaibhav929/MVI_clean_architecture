@@ -32,12 +32,12 @@ class DogDetailsScreenTest {
     @Test
     fun check_DogDetailsScreen_exists() {
         composeTestRule.activity.setContent {
-            DogDetailsScreen(
+            com.lloyd.features_animal_details.DogDetailsScreen(
                 dogBreedName = "affenpinscher",
                 dogFullName = "Affenpinscher",
-                viewModel = composeTestRule.activity.viewModels<DogDetailsViewModel>().value
+                viewModel = composeTestRule.activity.viewModels<com.lloyd.features_animal_details.DogDetailsViewModel>().value
             )
         }
-        composeTestRule.onNodeWithTag(TEST_TAG_DOG_DETAILS_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(com.lloyd.features_animal_details.TEST_TAG_DOG_DETAILS_SCREEN).assertExists()
     }
 }

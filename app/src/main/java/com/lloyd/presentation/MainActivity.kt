@@ -15,10 +15,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lloyd.common.Constants
-import com.lloyd.presentation.dog_details.DogDetailsScreen
-import com.lloyd.presentation.dog_details.DogDetailsViewModel
-import com.lloyd.presentation.dog_list.DogListScreen
-import com.lloyd.presentation.dog_list.DogListViewModel
+import com.lloyd.common.Screen
+import com.lloyd.features_animal_details.DogDetailsScreen
+import com.lloyd.features_animal_details.DogDetailsViewModel
+import com.lloyd.features_animal_list.DogListScreen
+import com.lloyd.features_animal_list.DogListViewModel
 import com.lloyd.presentation.ui.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,11 +41,11 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.DogListScreen.route
                     ) {
-                        val dogListViewModel: DogListViewModel by viewModels<DogListViewModel>()
+                        val dogListViewModel:  DogListViewModel by viewModels<DogListViewModel>()
                         composable(
                             route = Screen.DogListScreen.route
                         ) {
-                            DogListScreen(
+                             DogListScreen(
                                 navController = navController,
                                 viewModel = dogListViewModel
                             )
