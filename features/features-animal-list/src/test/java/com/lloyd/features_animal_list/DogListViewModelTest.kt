@@ -1,13 +1,12 @@
 package com.lloyd.features_animal_list
 
-
- import com.lloyd.common.Result
- import com.lloyd.features_animal_list.mockdata.fetchDogBreedsMockData
- import com.lloyd.data.dto.toDogBreed
- import com.lloyd.features_animal_list.intent.DogListIntent
- import com.lloyd.features_animal_list.viewmodel.DogListViewModel
- import com.lloyd.features_animal_list.viewstate.DogListViewState
- import io.mockk.MockKAnnotations
+import com.lloyd.common.Result
+import com.lloyd.domain.usecase.GetDogBreedsUseCase
+import com.lloyd.features_animal_list.mockdata.fetchDogBreedsMockData
+import com.lloyd.features_animal_list.intent.DogListIntent
+import com.lloyd.features_animal_list.viewmodel.DogListViewModel
+import com.lloyd.features_animal_list.viewstate.DogListViewState
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -16,8 +15,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
- import org.junit.Assert.assertTrue
- import org.junit.Before
+import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -28,7 +27,8 @@ class DogListViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutinesRule()
 
-    private val getDogBreedsUseCase: com.lloyd.domain.usecase.GetDogBreedsUseCase = mockk(relaxed = true)
+    private val getDogBreedsUseCase: GetDogBreedsUseCase =
+        mockk(relaxed = true)
     private lateinit var dogListViewModel: DogListViewModel
 
     @Before
@@ -41,10 +41,11 @@ class DogListViewModelTest {
     fun tearDown() {
         unmockkAll()
     }
+
     @Test
     fun `getDogBreeds success`() = runTest {
         // Arrange
-        val fakeDogList = fetchDogBreedsMockData().toDogBreed()
+        val fakeDogList = fetchDogBreedsMockData()
         coEvery { getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Success(fakeDogList)))
 
         // Act

@@ -1,5 +1,7 @@
 package com.lloyd.data.repository
 
+import com.lloyd.data.dto.toDogBreed
+import com.lloyd.data.dto.toDogDetails
 import com.lloyd.data.mockdata.fetchDogBreedsMockData
 import com.lloyd.data.mockdata.fetchDogDetailsMockData
 import com.lloyd.data.services.DogService
@@ -39,7 +41,7 @@ class DogRepositoryImplTest {
         val result = dogRepository.getDogBreeds()
 
         // Assert
-        assert(result == fakeDogBreedDto)
+        assert(result == fakeDogBreedDto.toDogBreed())
     }
 
     @Test
@@ -53,6 +55,6 @@ class DogRepositoryImplTest {
         val result = dogRepository.getDogDetailsByBreedName(dogBreedName)
 
         // Assert
-        assert(result == fakeDogDetailsDto)
+        assert(result == fakeDogDetailsDto.toDogDetails())
     }
 }

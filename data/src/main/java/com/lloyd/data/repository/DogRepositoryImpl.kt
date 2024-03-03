@@ -2,8 +2,6 @@ package com.lloyd.data.repository
 
 import com.lloyd.data.services.DogService
 import com.lloyd.domain.repository.DogRepository
-import com.lloyd.data.dto.DogBreedDto
-import com.lloyd.data.dto.DogDetailsDto
 import com.lloyd.data.dto.toDogBreed
 import com.lloyd.data.dto.toDogDetails
 import com.lloyd.domain.model.DogBreed
