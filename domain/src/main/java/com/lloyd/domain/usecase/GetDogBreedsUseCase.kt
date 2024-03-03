@@ -5,5 +5,5 @@ import com.lloyd.domain.model.DogBreed
 import kotlinx.coroutines.flow.Flow
 
 interface GetDogBreedsUseCase {
-    fun getDogBreeds(): Flow<Result<DogBreed>>
+    operator fun invoke(): Flow<Result<DogBreed>>
 }

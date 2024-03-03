@@ -16,7 +16,7 @@ class GetDogDetailsUseCaseImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : GetDogDetailsUseCase {
 
-    override fun getDogDetailsByBreedName(dogBreedName: String): Flow<Result<DogDetails>> = flow {
+    override fun invoke(dogBreedName: String): Flow<Result<DogDetails>> = flow {
         try {
             emit(Result.Loading())
             val dogDetails = dogBreedRepository.getDogDetailsByBreedName(dogBreedName)

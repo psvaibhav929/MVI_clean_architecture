@@ -49,7 +49,7 @@ class DogListViewModel @Inject constructor(
     }
 
     fun getDogBreeds() {
-        getDogBreedsUseCase.getDogBreeds().onEach { result ->
+        getDogBreedsUseCase().onEach { result ->
             when (result) {
                 is Result.Success -> {
                     _dogListState.value = DogListViewState.Success(

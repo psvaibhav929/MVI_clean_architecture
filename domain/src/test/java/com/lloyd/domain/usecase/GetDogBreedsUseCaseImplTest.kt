@@ -52,7 +52,7 @@ class GetDogBreedsUseCaseImplTest {
 
         // Act
         val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
 
         // Assert
         flow.collect {
@@ -72,7 +72,7 @@ class GetDogBreedsUseCaseImplTest {
 
         // Act
         val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
 
         // Assert
         flow.collect {
@@ -91,7 +91,7 @@ class GetDogBreedsUseCaseImplTest {
 
         // Act
         val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase.getDogBreeds()
+        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
 
         // Assert
         flow.collect {

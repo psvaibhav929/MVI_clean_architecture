@@ -51,7 +51,7 @@ class DogDetailsViewModel @Inject constructor(
     }
 
     fun getDogDetailsByBreedName(dogBreedName: String) {
-        getDogDetailsUseCase.getDogDetailsByBreedName(dogBreedName).onEach { result ->
+        getDogDetailsUseCase(dogBreedName).onEach { result ->
             when (result) {
                 is Result.Success -> {
                     _dogDetailsState.value = DogDetailsViewState.Success(

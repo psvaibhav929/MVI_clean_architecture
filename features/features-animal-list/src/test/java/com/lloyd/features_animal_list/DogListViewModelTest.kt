@@ -46,7 +46,7 @@ class DogListViewModelTest {
     fun `getDogBreeds success`() = runTest {
         // Arrange
         val fakeDogList = fetchDogBreedsMockData()
-        coEvery { getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Success(fakeDogList)))
+        coEvery { getDogBreedsUseCase() } returns (flowOf(Result.Success(fakeDogList)))
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -61,7 +61,7 @@ class DogListViewModelTest {
     fun `getDogBreeds error`() = runTest {
         // Arrange
         val errorMessage = "An unexpected error"
-        coEvery { getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Error(errorMessage)))
+        coEvery { getDogBreedsUseCase() } returns (flowOf(Result.Error(errorMessage)))
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -75,7 +75,7 @@ class DogListViewModelTest {
     @Test
     fun `getDogBreeds loading`() = runTest {
         // Arrange
-        coEvery { getDogBreedsUseCase.getDogBreeds() } returns (flowOf(Result.Loading()))
+        coEvery { getDogBreedsUseCase() } returns (flowOf(Result.Loading()))
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
