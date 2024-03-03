@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppTest"
         tools:targetApi="31">
         <activity
-            android:name="com.lloyd.presentation.MainActivity"
+            android:name="com.lloyd.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MySplash">

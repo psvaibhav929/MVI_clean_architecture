@@ -1,7 +1,7 @@
 package com.lloyd.features_animal_list.mockdata
 
 import com.google.gson.Gson
-import com.lloyd.domain.repository.dto.DogBreedDto
+import com.lloyd.data.dto.DogBreedDto
 
 
 val dogBreedsMockJson = """
@@ -251,6 +251,6 @@ val dogBreedsMockJson = """
 
 private val gson by lazy { Gson() }
 
-fun fetchDogBreedsMockData(): DogBreedDto {
-    return gson.fromJson<DogBreedDto>(dogBreedsMockJson, DogBreedDto::class.java)
+fun fetchDogBreedsMockData(): com.lloyd.data.dto.DogBreedDto {
+    return gson.fromJson<com.lloyd.data.dto.DogBreedDto>(dogBreedsMockJson, com.lloyd.data.dto.DogBreedDto::class.java)
 }

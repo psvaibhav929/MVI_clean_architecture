@@ -1,4 +1,4 @@
-package com.lloyd.presentation.ui.theme
+package com.lloyd.theme
 
 import androidx.compose.ui.graphics.Color
 

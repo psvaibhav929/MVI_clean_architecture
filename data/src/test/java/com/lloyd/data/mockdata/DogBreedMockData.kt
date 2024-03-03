@@ -1,8 +1,8 @@
 package com.lloyd.data.mockdata
 
 import com.google.gson.Gson
-import com.lloyd.domain.repository.dto.DogBreedDto
-import com.lloyd.domain.repository.dto.DogDetailsDto
+import com.lloyd.data.dto.DogBreedDto
+import com.lloyd.data.dto.DogDetailsDto
 
 
 val dogBreedsMockJson = """

@@ -1,14 +1,15 @@
-package com.lloyd.presentation.dog_details
+package com.lloyd.screens.dog_list
 
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.lloyd.features_animal_details.DogDetailsScreen
-import com.lloyd.features_animal_details.DogDetailsViewModel
-import com.lloyd.features_animal_details.TEST_TAG_DOG_DETAILS_SCREEN
-import com.lloyd.presentation.MainActivity
+import com.lloyd.features_animal_list.DogListScreen
+import com.lloyd.features_animal_list.viewmodel.DogListViewModel
+import com.lloyd.features_animal_list.TEST_TAG_DOG_LIST_SCREEN
+import com.lloyd.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert.*
@@ -19,8 +20,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class DogDetailsScreenTest {
-
+class DogListScreenTest {
     @get:Rule(order = 1)
     var hiltTestRule = HiltAndroidRule(this)
 
@@ -33,14 +33,13 @@ class DogDetailsScreenTest {
     }
 
     @Test
-    fun check_DogDetailsScreen_exists() {
+    fun check_DogListScreen_exists() {
         composeTestRule.activity.setContent {
-            DogDetailsScreen(
-                dogBreedName = "affenpinscher",
-                dogFullName = "Affenpinscher",
-                viewModel = composeTestRule.activity.viewModels<DogDetailsViewModel>().value
+             DogListScreen(
+                navController = rememberNavController(),
+                viewModel = composeTestRule.activity.viewModels<DogListViewModel>().value
             )
         }
-        composeTestRule.onNodeWithTag(TEST_TAG_DOG_DETAILS_SCREEN).assertExists()
+        composeTestRule.onNodeWithTag(TEST_TAG_DOG_LIST_SCREEN).assertExists()
     }
 }

@@ -1,9 +1,10 @@
 package com.lloyd.domain.repository
 
-import com.lloyd.domain.repository.dto.DogBreedDto
-import com.lloyd.domain.repository.dto.DogDetailsDto
+
+import com.lloyd.domain.model.DogBreed
+import com.lloyd.domain.model.DogDetails
 
 interface DogRepository {
-    suspend fun getDogBreeds(): DogBreedDto
-    suspend fun getDogDetailsByBreedName(dogBreedName: String): DogDetailsDto
+    suspend fun getDogBreeds(): DogBreed
+    suspend fun getDogDetailsByBreedName(dogBreedName: String): DogDetails
 }

@@ -3,7 +3,7 @@ package com.lloyd.features_animal_list
 
  import com.lloyd.common.Result
  import com.lloyd.features_animal_list.mockdata.fetchDogBreedsMockData
- import com.lloyd.domain.repository.dto.toDogBreed
+ import com.lloyd.data.dto.toDogBreed
  import com.lloyd.features_animal_list.intent.DogListIntent
  import com.lloyd.features_animal_list.viewmodel.DogListViewModel
  import com.lloyd.features_animal_list.viewstate.DogListViewState

@@ -1,21 +1,25 @@
 package com.lloyd.data.repository
 
-import com.lloyd.data.remote.DogApi
+import com.lloyd.data.services.DogService
 import com.lloyd.domain.repository.DogRepository
-import com.lloyd.domain.repository.dto.DogBreedDto
-import com.lloyd.domain.repository.dto.DogDetailsDto
+import com.lloyd.data.dto.DogBreedDto
+import com.lloyd.data.dto.DogDetailsDto
+import com.lloyd.data.dto.toDogBreed
+import com.lloyd.data.dto.toDogDetails
+import com.lloyd.domain.model.DogBreed
+import com.lloyd.domain.model.DogDetails
 import javax.inject.Inject
 
 
 class DogRepositoryImpl @Inject constructor(
-    private val dogApi: DogApi
+    private val dogApi: DogService
 ) : DogRepository {
 
-    override suspend fun getDogBreeds():  DogBreedDto {
-        return dogApi.getAllBreeds()
+    override suspend fun getDogBreeds(): DogBreed {
+        return dogApi.getAllBreeds().toDogBreed()
     }
 
-    override suspend fun getDogDetailsByBreedName(dogBreedName: String):  DogDetailsDto {
-        return dogApi.getDogDetailsByBreedName(dogBreedName)
+    override suspend fun getDogDetailsByBreedName(dogBreedName: String): DogDetails {
+        return dogApi.getDogDetailsByBreedName(dogBreedName).toDogDetails()
     }
 }

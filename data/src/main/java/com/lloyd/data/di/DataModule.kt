@@ -1,7 +1,7 @@
 package com.lloyd.data.di
 
 import com.lloyd.common.Constants
-import com.lloyd.data.remote.DogApi
+import com.lloyd.data.services.DogService
 import com.lloyd.data.repository.DogRepositoryImpl
 import com.lloyd.domain.repository.DogRepository
 import dagger.Binds
@@ -15,16 +15,16 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object DataModule {
 
     @Provides
     @Singleton
-    fun provideDogApi(): DogApi {
+    fun provideDogApi(): DogService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(DogApi::class.java)
+            .create(DogService::class.java)
     }
 
     @Module

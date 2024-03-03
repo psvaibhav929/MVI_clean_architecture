@@ -1,8 +1,8 @@
 package com.lloyd.domain.mockdata
 
 import com.google.gson.Gson
-import com.lloyd.domain.repository.dto.DogBreedDto
-import com.lloyd.domain.repository.dto.DogDetailsDto
+import com.lloyd.data.dto.DogBreedDto
+import com.lloyd.data.dto.DogDetailsDto
 
 
 val dogBreedsMockJson = """
@@ -252,14 +252,14 @@ val dogBreedsMockJson = """
 
 private val gson by lazy { Gson() }
 
-fun fetchDogBreedsMockData(): DogBreedDto {
-    return gson.fromJson<DogBreedDto>(dogBreedsMockJson, DogBreedDto::class.java)
+fun fetchDogBreedsMockData(): com.lloyd.data.dto.DogBreedDto {
+    return gson.fromJson<com.lloyd.data.dto.DogBreedDto>(dogBreedsMockJson, com.lloyd.data.dto.DogBreedDto::class.java)
 }
 
 val dogDetailsMockJson = """
     {"message":"https:\/\/images.dog.ceo\/breeds\/affenpinscher\/n02110627_2748.jpg","status":"success"}
 """.trimIndent()
 
-fun fetchDogDetailsMockData(): DogDetailsDto {
-    return gson.fromJson<DogDetailsDto>(dogDetailsMockJson, DogDetailsDto::class.java)
+fun fetchDogDetailsMockData(): com.lloyd.data.dto.DogDetailsDto {
+    return gson.fromJson<com.lloyd.data.dto.DogDetailsDto>(dogDetailsMockJson, com.lloyd.data.dto.DogDetailsDto::class.java)
 }

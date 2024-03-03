@@ -1,4 +1,4 @@
-package com.lloyd.presentation
+package com.lloyd
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import com.lloyd.features_animal_details.DogDetailsScreen
 import com.lloyd.features_animal_details.DogDetailsViewModel
 import com.lloyd.features_animal_list.DogListScreen
 import com.lloyd.features_animal_list.viewmodel.DogListViewModel
-import com.lloyd.presentation.ui.theme.MainActivityTheme
+import com.lloyd.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

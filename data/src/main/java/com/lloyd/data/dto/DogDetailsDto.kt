@@ -1,4 +1,4 @@
-package com.lloyd.domain.repository.dto
+package com.lloyd.data.dto
 
 import android.os.Parcelable
 import com.lloyd.domain.model.DogDetails

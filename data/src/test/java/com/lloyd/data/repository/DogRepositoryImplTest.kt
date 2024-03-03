@@ -2,7 +2,7 @@ package com.lloyd.data.repository
 
 import com.lloyd.data.mockdata.fetchDogBreedsMockData
 import com.lloyd.data.mockdata.fetchDogDetailsMockData
-import com.lloyd.data.remote.DogApi
+import com.lloyd.data.services.DogService
 import com.lloyd.domain.repository.DogRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Test
 
 class DogRepositoryImplTest {
-    private var dogApi: DogApi = mockk()
+    private var dogApi: DogService = mockk()
     private lateinit var dogRepository: DogRepository
 
 
