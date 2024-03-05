@@ -12,6 +12,7 @@ android {
 
 dependencies {
     implementation(Dep.coreKtx)
+    compose()
     daggerHilt()
     test()
 }

@@ -1,13 +1,16 @@
 package com.lloyd.features_animal_details
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.CircularProgressIndicator
@@ -65,31 +68,29 @@ fun DogDetailsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = dogFullName.toString(),
-                    color = MaterialTheme.colorScheme.primary,
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Box(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .wrapContentHeight()
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painter,
-                        contentScale = ContentScale.FillWidth,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(220.dp),
+                    DogImage(
+                        painter = painter, Modifier
+                            .width(50.dp)
+                            .height(50.dp)
                     )
-                    if (painter.state is AsyncImagePainter.State.Loading) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(
+                        text = dogFullName.toString(),
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
+                Spacer(modifier = Modifier.height(20.dp))
+                DogImage(
+                    painter = painter, Modifier
+                        .fillMaxWidth()
+                        .height(250.dp)
+                )
             }
         }
 
