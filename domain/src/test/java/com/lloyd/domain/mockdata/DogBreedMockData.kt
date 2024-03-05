@@ -1,81 +1,20 @@
 package com.lloyd.domain.mockdata
 
 import com.google.gson.Gson
+import com.lloyd.common.test.TestHelper
 import com.lloyd.domain.model.DogBreed
 import com.lloyd.domain.model.DogDetails
 
 
-val dogBreedsMockJson = """
-    {
-  "dogs": [
-    {
-      "dogFullName": "Affenpinscher",
-      "dogBreedName": "affenpinscher"
-    },
-    {
-      "dogFullName": "Australian Kelpie",
-      "dogBreedName": "australian",
-      "dogSubBreedName": "kelpie"
-    },
-    {
-      "dogFullName": "Australian Shepherd",
-      "dogBreedName": "australian",
-      "dogSubBreedName": "shepherd"
-    },
-    {
-      "dogFullName": "Bakharwal Dog (Indian)",
-      "dogBreedName": "bakharwal",
-      "dogSubBreedName": "indian"
-    },
-    {
-      "dogFullName": "Boston Bulldog",
-      "dogBreedName": "bulldog",
-      "dogSubBreedName": "boston"
-    },
-    {
-      "dogFullName": "English Bulldog",
-      "dogBreedName": "bulldog",
-      "dogSubBreedName": "english"
-    },
-    {
-      "dogFullName": "French Bulldog",
-      "dogBreedName": "bulldog",
-      "dogSubBreedName": "french"
-    },
-    {
-      "dogFullName": "Norwegian Buhund",
-      "dogBreedName": "buhund",
-      "dogSubBreedName": "norwegian"
-    },
-    {
-      "dogFullName": "Staffordshire Bullterrier",
-      "dogBreedName": "bullterrier",
-      "dogSubBreedName": "staffordshire"
-    },
-    {
-      "dogFullName": "Australian Cattledog",
-      "dogBreedName": "cattledog",
-      "dogSubBreedName": "australian"
-    },
-    {
-      "dogFullName": "Chippiparai Dog (Indian)",
-      "dogBreedName": "chippiparai",
-      "dogSubBreedName": "indian"
-    }
-  ]
-}
-""".trimIndent()
+private const val dogBreedsMockJson =  "dog_breed.json"
 
 private val gson by lazy { Gson() }
 
 fun fetchDogBreedsMockData(): DogBreed {
-    return gson.fromJson<DogBreed>(dogBreedsMockJson, DogBreed::class.java)
+    return gson.fromJson(TestHelper.readFileResource("/$dogBreedsMockJson"), DogBreed::class.java)
 }
 
-val dogDetailsMockJson = """
-    {"dogImageUrl":"https:\/\/images.dog.ceo\/breeds\/affenpinscher\/n02110627_2748.jpg","status":"success"}
-""".trimIndent()
-
+private const val dogDetailsMockJson = "dog_detail.json"
 fun fetchDogDetailsMockData(): DogDetails {
-    return gson.fromJson<DogDetails>(dogDetailsMockJson, DogDetails::class.java)
+    return gson.fromJson(TestHelper.readFileResource("/$dogDetailsMockJson"), DogDetails::class.java)
 }

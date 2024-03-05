@@ -35,7 +35,7 @@ class GetDogBreedsUseCaseImplTest {
         Dispatchers.setMain(testDispatcher)
 
         getDogBreedsUseCase =
-            GetDogBreedsUseCaseImpl(dogRepository, testDispatcher)
+            GetDogBreedsUseCase(dogRepository, testDispatcher)
     }
 
     @After

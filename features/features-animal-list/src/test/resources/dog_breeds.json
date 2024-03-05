@@ -1,0 +1,58 @@
+{
+  "dogs": [
+    {
+      "dogFullName": "Affenpinscher",
+      "dogBreedName": "affenpinscher"
+    },
+    {
+      "dogFullName": "Australian Kelpie",
+      "dogBreedName": "australian",
+      "dogSubBreedName": "kelpie"
+    },
+    {
+      "dogFullName": "Australian Shepherd",
+      "dogBreedName": "australian",
+      "dogSubBreedName": "shepherd"
+    },
+    {
+      "dogFullName": "Bakharwal Dog (Indian)",
+      "dogBreedName": "bakharwal",
+      "dogSubBreedName": "indian"
+    },
+    {
+      "dogFullName": "Boston Bulldog",
+      "dogBreedName": "bulldog",
+      "dogSubBreedName": "boston"
+    },
+    {
+      "dogFullName": "English Bulldog",
+      "dogBreedName": "bulldog",
+      "dogSubBreedName": "english"
+    },
+    {
+      "dogFullName": "French Bulldog",
+      "dogBreedName": "bulldog",
+      "dogSubBreedName": "french"
+    },
+    {
+      "dogFullName": "Norwegian Buhund",
+      "dogBreedName": "buhund",
+      "dogSubBreedName": "norwegian"
+    },
+    {
+      "dogFullName": "Staffordshire Bullterrier",
+      "dogBreedName": "bullterrier",
+      "dogSubBreedName": "staffordshire"
+    },
+    {
+      "dogFullName": "Australian Cattledog",
+      "dogBreedName": "cattledog",
+      "dogSubBreedName": "australian"
+    },
+    {
+      "dogFullName": "Chippiparai Dog (Indian)",
+      "dogBreedName": "chippiparai",
+      "dogSubBreedName": "indian"
+    }
+  ]
+}

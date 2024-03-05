@@ -35,7 +35,7 @@ class GetDogDetailsUseCaseImplTest {
         Dispatchers.setMain(testDispatcher)
 
         getDogDetailsUseCase =
-            GetDogDetailsUseCaseImpl(dogRepository, testDispatcher)
+            GetDogDetailsUseCase(dogRepository, testDispatcher)
     }
 
     @After

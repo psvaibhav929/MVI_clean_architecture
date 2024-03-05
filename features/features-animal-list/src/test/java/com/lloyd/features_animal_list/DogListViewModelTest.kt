@@ -1,5 +1,6 @@
 package com.lloyd.features_animal_list
 
+import com.lloyd.common.test.MainCoroutinesRule
 import com.lloyd.common.Result
 import com.lloyd.domain.usecase.GetDogBreedsUseCase
 import com.lloyd.features_animal_list.mockdata.fetchDogBreedsMockData

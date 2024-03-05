@@ -22,11 +22,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.lloyd.features_animal_details.viewstate.DogDetailsViewState
-import com.lloyd.features_animal_list.intent.DogDetailsIntent
+import com.lloyd.features_animal_details.intent.DogDetailsIntent
 
 const val TEST_TAG_DOG_DETAILS_SCREEN = "dog_details_screen"
 
@@ -34,8 +35,9 @@ const val TEST_TAG_DOG_DETAILS_SCREEN = "dog_details_screen"
 fun DogDetailsScreen(
     dogBreedName: String?,
     dogFullName: String?,
-    viewModel: DogDetailsViewModel
+    viewModel: DogDetailsViewModel = hiltViewModel()
 ) {
+
     LaunchedEffect(key1 = null, block = {
         dogBreedName?.let {
             viewModel.sendIntent(DogDetailsIntent.GetDogDetails(it))
@@ -43,9 +45,7 @@ fun DogDetailsScreen(
     })
 
     val state = viewModel.dogDetailsState.collectAsStateWithLifecycle().value
-    if (state is DogDetailsViewState.Success) {
 
-    }
     val painter = rememberAsyncImagePainter(
         model = if (state is DogDetailsViewState.Success) {
             state.dogImageUrl

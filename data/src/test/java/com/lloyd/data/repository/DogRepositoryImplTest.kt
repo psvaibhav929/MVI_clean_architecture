@@ -1,7 +1,7 @@
 package com.lloyd.data.repository
 
-import com.lloyd.data.dto.toDogBreed
-import com.lloyd.data.dto.toDogDetails
+import com.lloyd.data.mappers.toDogBreed
+import com.lloyd.data.mappers.toDogDetails
 import com.lloyd.data.mockdata.fetchDogBreedsMockData
 import com.lloyd.data.mockdata.fetchDogDetailsMockData
 import com.lloyd.data.services.DogService

@@ -1,4 +1,4 @@
-package com.lloyd.features_animal_details
+package com.lloyd.common.test
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

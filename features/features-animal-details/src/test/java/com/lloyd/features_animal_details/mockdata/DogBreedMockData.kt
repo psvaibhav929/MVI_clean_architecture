@@ -1,17 +1,14 @@
 package com.lloyd.features_animal_details.mockdata
 
- import com.google.gson.Gson
- import com.lloyd.domain.model.DogDetails
+import com.google.gson.Gson
+import com.lloyd.common.test.TestHelper
+import com.lloyd.domain.model.DogDetails
 
-
-val dogDetailsMockJson = """
-    {
-        "dogImageUrl": "https://example.com/labrador.jpg"
-    }
-""".trimIndent()
+private const val dogDetailsMockJson = "dog_details.json"
 
 private val gson by lazy { Gson() }
 
 fun fetchDogDetailsMockData(): DogDetails {
- return gson.fromJson(dogDetailsMockJson, DogDetails::class.java)
+    val content = TestHelper.readFileResource("/$dogDetailsMockJson")
+    return gson.fromJson(content, DogDetails::class.java)
 }

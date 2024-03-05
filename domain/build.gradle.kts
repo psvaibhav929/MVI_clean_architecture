@@ -10,10 +10,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(Dep.coreKtx)
-    // Retrofit for typesafe API calls
-    retrofit()
-    //DI - Dagger Hilt
+    implementation(Retrofit.retrofitGson)
     daggerHilt()
     test()
 }

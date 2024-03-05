@@ -23,9 +23,8 @@ dependencies {
     implementation(Dep.lifecycleRuntime)
     implementation(Dep.coil)
     implementation(Retrofit.retrofitGson)
-
+    implementation(DaggerHilt.hiltNavigationCompose)
     compose()
-
     daggerHilt()
     test()
     androidTest()

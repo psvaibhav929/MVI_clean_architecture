@@ -1,4 +1,4 @@
-package com.lloyd.domain.di
+package com.lloyd.common.di
 
 import dagger.Module
 import dagger.Provides

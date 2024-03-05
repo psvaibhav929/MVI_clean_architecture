@@ -17,6 +17,7 @@ object Retrofit {
 
 object DaggerHilt {
     const val hilt = "com.google.dagger:hilt-android:${Versions.daggerHilt}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.2.0"
     const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.daggerHilt}"
 }
 

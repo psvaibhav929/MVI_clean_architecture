@@ -20,14 +20,12 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
-
     implementation(Dep.coreKtx)
     implementation(Dep.lifecycleRuntime)
     implementation(Dep.coil)
     implementation(Retrofit.retrofitGson)
-
+    implementation(DaggerHilt.hiltNavigationCompose)
     compose()
-
     daggerHilt()
     test()
     androidTest()

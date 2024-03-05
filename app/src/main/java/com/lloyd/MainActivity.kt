@@ -41,17 +41,14 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.DogListScreen.route
                     ) {
-                        val dogListViewModel: DogListViewModel by viewModels<DogListViewModel>()
                         composable(
                             route = Screen.DogListScreen.route
                         ) {
                              DogListScreen(
                                 navController = navController,
-                                viewModel = dogListViewModel
                             )
                         }
-                        val dogDetailsViewModel: DogDetailsViewModel by viewModels<DogDetailsViewModel>()
-                        composable(
+                         composable(
                             route = Screen.DogDetailScreen.route + "/{${Constants.PARAM_DOG_BREED_NAME}}" + "/{${Constants.PARAM_DOG_FULL_NAME}}",
                             arguments = listOf(
                                 navArgument(Constants.PARAM_DOG_BREED_NAME) { type = NavType.StringType },
@@ -63,7 +60,6 @@ class MainActivity : ComponentActivity() {
                             DogDetailsScreen(
                                 dogBreedName = dogBreedName,
                                 dogFullName = dogFullName,
-                                viewModel = dogDetailsViewModel
                             )
                         }
                     }

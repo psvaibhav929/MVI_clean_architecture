@@ -9,7 +9,3 @@ data class DogDetailsDto(
     val message: String,
     val status: String
 ) : Parcelable
-
-fun DogDetailsDto.toDogDetails(): DogDetails {
-    return DogDetails(message)
-}
