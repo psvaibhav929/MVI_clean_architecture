@@ -18,7 +18,7 @@ android {
         versionName = ProjectConfig.versionName
 
 //        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner = "com.lloyd.HiltTestRunner"
+        
 
         vectorDrawables {
             useSupportLibrary = true
@@ -84,6 +84,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":features"))
     implementation(project(":features:features-animal-list"))
     implementation(project(":features:features-animal-details"))
 

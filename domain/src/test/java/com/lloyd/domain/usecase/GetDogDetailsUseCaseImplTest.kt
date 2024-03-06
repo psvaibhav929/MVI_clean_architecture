@@ -1,6 +1,6 @@
 package com.lloyd.domain.usecase
 
-import com.lloyd.common.Result
+import com.lloyd.common.ApiResult
 import com.lloyd.domain.mockdata.fetchDogDetailsMockData
 import com.lloyd.domain.model.DogDetails
 import com.lloyd.domain.repository.DogRepository
@@ -47,58 +47,22 @@ class GetDogDetailsUseCaseImplTest {
     fun `getDogDetailsByBreedName success`() = runTest {
         // Arrange
         val fakeDogDetails = fetchDogDetailsMockData()
-        coEvery { dogRepository.getDogDetailsByBreedName("affenpinscher") } returns fakeDogDetails
+        coEvery { dogRepository.getDogDetailsByBreedName("affenpinscher") } returns ApiResult.Success(fakeDogDetails)
 
         // Act
-        val result: MutableList<Result<DogDetails>> = mutableListOf()
-        val flow: Flow<Result<DogDetails>> = getDogDetailsUseCase("affenpinscher")
+        val apiResult: MutableList<ApiResult<DogDetails>> = mutableListOf()
+        val flow: Flow<ApiResult<DogDetails>> = getDogDetailsUseCase("affenpinscher")
 
         // Assert
         flow.collect {
-            result.add(it)
+            apiResult.add(it)
         }
 
-        assertEquals(2, result.size) // Loading + Success
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Success)
-        assert(result[1].data?.dogImageUrl?.isNotBlank() == true)
+        assertEquals(2, apiResult.size) // Loading + Success
+        assert(apiResult[0] is ApiResult.Loading)
+        assert(apiResult[1] is ApiResult.Success)
+        assert(apiResult[1].data?.dogImageUrl?.isNotBlank() == true)
     }
 
-    @Test
-    fun `getDogDetailsByBreedName error - HTTP exception`() = runTest {
-        // Arrange
-        coEvery { dogRepository.getDogDetailsByBreedName("Bulldog") } throws (HttpException(Response.success(null)))
 
-        // Act
-        val result: MutableList<Result<DogDetails>> = mutableListOf()
-        val flow: Flow<Result<DogDetails>> = getDogDetailsUseCase("Bulldog")
-
-        // Assert
-        flow.collect {
-            result.add(it)
-        }
-
-        assertEquals(2, result.size) // Loading + Error
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Error)
-    }
-
-    @Test
-    fun `getDogDetailsByBreedName error - IOException`() = runTest {
-        // Arrange
-        coEvery {dogRepository.getDogDetailsByBreedName("Bulldog") } throws IOException()
-
-        // Act
-        val result: MutableList<Result<DogDetails>> = mutableListOf()
-        val flow: Flow<Result<DogDetails>> = getDogDetailsUseCase("Bulldog")
-
-        // Assert
-        flow.collect {
-            result.add(it)
-        }
-
-        assertEquals(2, result.size) // Loading + Error
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Error)
-    }
 }

@@ -1,6 +1,6 @@
 package com.lloyd.domain.usecase
 
-import com.lloyd.common.Result
+import com.lloyd.common.ApiResult
 import com.lloyd.common.di.IoDispatcher
 import com.lloyd.domain.model.DogBreed
 import com.lloyd.domain.repository.DogRepository
@@ -15,8 +15,8 @@ class GetDogBreedsUseCase @Inject constructor(
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    operator fun invoke(): Flow<Result<DogBreed>> = flow {
-        emit(Result.Loading())
+    operator fun invoke(): Flow<ApiResult<DogBreed>> = flow {
+        emit(ApiResult.Loading())
         emit(dogBreedRepository.getDogBreeds())
     }.flowOn(ioDispatcher)
 }

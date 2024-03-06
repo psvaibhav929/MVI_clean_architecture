@@ -2,7 +2,7 @@ package com.lloyd.features_animal_details
 
 
  import com.lloyd.common.test.MainCoroutinesRule
- import com.lloyd.common.Result
+ import com.lloyd.common.ApiResult
  import com.lloyd.domain.usecase.GetDogDetailsUseCase
  import com.lloyd.features_animal_details.mockdata.fetchDogDetailsMockData
  import com.lloyd.features_animal_details.viewstate.DogDetailsViewState
@@ -48,7 +48,7 @@ class DogDetailsViewModelTest {
         // Arrange
         val fakeDogDetails = fetchDogDetailsMockData()
         val dogBreedName = "Labrador"
-        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(Result.Success(fakeDogDetails))
+        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(ApiResult.Success(fakeDogDetails))
 
         // Act
         dogListViewModel.sendIntent(DogDetailsIntent.GetDogDetails(dogBreedName))
@@ -64,7 +64,7 @@ class DogDetailsViewModelTest {
         // Arrange
         val errorMessage = "An unexpected error"
         val dogBreedName = "Labrador"
-        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(Result.Error(errorMessage))
+        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(ApiResult.Error(errorMessage))
 
         // Act
         dogListViewModel.sendIntent(DogDetailsIntent.GetDogDetails(dogBreedName))
@@ -79,7 +79,7 @@ class DogDetailsViewModelTest {
     fun `getDogDetailsByBreedName loading`() = runTest {
         // Arrange
         val dogBreedName = "Labrador"
-        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(Result.Loading())
+        coEvery { getDogBreedsUseCase(dogBreedName) } returns flowOf(ApiResult.Loading())
 
         // Act
         dogListViewModel.sendIntent(DogDetailsIntent.GetDogDetails(dogBreedName))

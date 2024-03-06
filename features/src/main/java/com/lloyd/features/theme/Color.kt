@@ -1,4 +1,4 @@
-package com.lloyd.theme
+package com.lloyd.features.theme
 
 import androidx.compose.ui.graphics.Color
 

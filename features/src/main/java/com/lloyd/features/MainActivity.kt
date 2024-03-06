@@ -1,9 +1,8 @@
-package com.lloyd
+package com.lloyd.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,10 +16,8 @@ import androidx.navigation.navArgument
 import com.lloyd.common.Constants
 import com.lloyd.common.Screen
 import com.lloyd.features_animal_details.DogDetailsScreen
-import com.lloyd.features_animal_details.DogDetailsViewModel
 import com.lloyd.features_animal_list.DogListScreen
-import com.lloyd.features_animal_list.viewmodel.DogListViewModel
-import com.lloyd.theme.MainActivityTheme
+import com.lloyd.features.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

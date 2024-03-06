@@ -2,7 +2,7 @@ package com.lloyd.features_animal_list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lloyd.common.Result
+import com.lloyd.common.ApiResult
 import com.lloyd.domain.usecase.GetDogBreedsUseCase
 import com.lloyd.features_animal_list.intent.DogListIntent
 import com.lloyd.features_animal_list.viewstate.DogListViewState
@@ -40,19 +40,19 @@ class DogListViewModel @Inject constructor(
     private fun getDogBreeds() {
         getDogBreedsUseCase().onEach { result ->
             when (result) {
-                is Result.Success -> {
+                is ApiResult.Success -> {
                     _dogListState.value = DogListViewState.Success(
                         result.data?.dogs ?: emptyList()
                     )
                 }
 
-                is Result.Error -> {
+                is ApiResult.Error -> {
                     _dogListState.value = DogListViewState.Error(
                         result.message ?: "An unexpected error"
                     )
                 }
 
-                is Result.Loading -> {
+                is ApiResult.Loading -> {
                     _dogListState.value = DogListViewState.Loading
                 }
             }

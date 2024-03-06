@@ -2,7 +2,7 @@ package com.lloyd.features_animal_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lloyd.common.Result
+import com.lloyd.common.ApiResult
 import com.lloyd.domain.usecase.GetDogDetailsUseCase
 import com.lloyd.features_animal_details.intent.DogDetailsIntent
 import com.lloyd.features_animal_details.viewstate.DogDetailsViewState
@@ -38,19 +38,19 @@ class DogDetailsViewModel @Inject constructor(
     private fun getDogDetailsByBreedName(dogBreedName: String) {
         getDogDetailsUseCase(dogBreedName).onEach { result ->
             when (result) {
-                is Result.Success -> {
+                is ApiResult.Success -> {
                     _dogDetailsState.value = DogDetailsViewState.Success(
                         dogImageUrl = result.data?.dogImageUrl
                     )
                 }
 
-                is Result.Error -> {
+                is ApiResult.Error -> {
                     _dogDetailsState.value = DogDetailsViewState.Error(
                         result.message ?: "An unexpected error"
                     )
                 }
 
-                is Result.Loading -> {
+                is ApiResult.Loading -> {
                     _dogDetailsState.value = DogDetailsViewState.Loading
                 }
             }

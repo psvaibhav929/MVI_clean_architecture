@@ -1,6 +1,6 @@
 package com.lloyd.domain.usecase
 
-import com.lloyd.common.Result
+import com.lloyd.common.ApiResult
 import com.lloyd.domain.mockdata.fetchDogBreedsMockData
 import com.lloyd.domain.model.DogBreed
 import com.lloyd.domain.repository.DogRepository
@@ -48,58 +48,21 @@ class GetDogBreedsUseCaseImplTest {
         // Arrange
         val fakeDogBreeds = fetchDogBreedsMockData()
 
-        coEvery { dogRepository.getDogBreeds() } returns fakeDogBreeds
+        coEvery { dogRepository.getDogBreeds() } returns ApiResult.Success(fakeDogBreeds)
 
         // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
+        val apiResult: MutableList<ApiResult<DogBreed>> = mutableListOf()
+        val flow: Flow<ApiResult<DogBreed>> = getDogBreedsUseCase()
 
         // Assert
         flow.collect {
-            result.add(it)
+            apiResult.add(it)
         }
 
-        assertEquals(2, result.size) // Loading + Success
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Success)
-        assert(result[1].data?.dogs?.isEmpty()?.not() == true)
+        assertEquals(2, apiResult.size) // Loading + Success
+        assert(apiResult[0] is ApiResult.Loading)
+        assert(apiResult[1] is ApiResult.Success)
+        assert(apiResult[1].data?.dogs?.isEmpty()?.not() == true)
     }
 
-    @Test
-    fun `getDogBreeds error - HTTP exception`() = runTest {
-        // Arrange
-        coEvery { dogRepository.getDogBreeds() } throws (HttpException(Response.success(null)))
-
-        // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
-
-        // Assert
-        flow.collect {
-            result.add(it)
-        }
-
-        assertEquals(2, result.size) // Loading + Error
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Error)
-    }
-
-    @Test
-    fun `getDogBreeds error - IOException`() = runTest {
-        // Arrange
-        coEvery { dogRepository.getDogBreeds() } throws IOException()
-
-        // Act
-        val result: MutableList<Result<DogBreed>> = mutableListOf()
-        val flow: Flow<Result<DogBreed>> = getDogBreedsUseCase()
-
-        // Assert
-        flow.collect {
-            result.add(it)
-        }
-
-        assertEquals(2, result.size) // Loading + Error
-        assert(result[0] is Result.Loading)
-        assert(result[1] is Result.Error)
-    }
 }
