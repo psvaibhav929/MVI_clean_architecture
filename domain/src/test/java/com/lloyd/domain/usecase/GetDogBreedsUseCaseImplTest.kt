@@ -4,7 +4,7 @@ import com.lloyd.common.ApiResult
 import com.lloyd.domain.mockdata.fetchDogBreedsMockData
 import com.lloyd.domain.model.DogBreed
 import com.lloyd.domain.repository.DogRepository
- import io.mockk.MockKAnnotations
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -18,9 +18,6 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import retrofit2.HttpException
-import retrofit2.Response
-import java.io.IOException
 
 
 class GetDogBreedsUseCaseImplTest {

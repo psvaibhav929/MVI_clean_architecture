@@ -1,7 +1,6 @@
 package com.lloyd.data.dto
 
 import android.os.Parcelable
-import com.lloyd.domain.model.DogDetails
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
