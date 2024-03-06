@@ -17,14 +17,8 @@ class GetDogDetailsUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     operator fun invoke(dogBreedName: String): Flow<Result<DogDetails>> = flow {
-        try {
-            emit(Result.Loading())
-            val dogDetails = dogBreedRepository.getDogDetailsByBreedName(dogBreedName)
-            emit(Result.Success(dogDetails))
-        } catch (e: Exception) {
-            val errorMessage = ErrorFactory.getErrorMessage(e)
-            emit(Result.Error(errorMessage))
-        }
+        emit(Result.Loading())
+        emit(dogBreedRepository.getDogDetailsByBreedName(dogBreedName))
     }.flowOn(ioDispatcher)
 
 

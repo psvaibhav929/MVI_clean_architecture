@@ -1,6 +1,5 @@
 package com.lloyd.domain.usecase
 
-import com.lloyd.common.ErrorFactory
 import com.lloyd.common.Result
 import com.lloyd.common.di.IoDispatcher
 import com.lloyd.domain.model.DogBreed
@@ -17,13 +16,7 @@ class GetDogBreedsUseCase @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) {
     operator fun invoke(): Flow<Result<DogBreed>> = flow {
-        try {
-            emit(Result.Loading())
-            val dogBreeds = dogBreedRepository.getDogBreeds()
-            emit(Result.Success(dogBreeds))
-        } catch (e: Exception) {
-            val errorMessage = ErrorFactory.getErrorMessage(e)
-            emit(Result.Error(errorMessage))
-        }
+        emit(Result.Loading())
+        emit(dogBreedRepository.getDogBreeds())
     }.flowOn(ioDispatcher)
 }
