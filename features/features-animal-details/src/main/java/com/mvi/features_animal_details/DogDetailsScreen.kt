@@ -40,7 +40,6 @@ fun DogDetailsScreen(
             viewModel.sendIntent(DogDetailsIntent.GetDogDetails(it))
         }
     })
-
     val state by viewModel.dogDetailsState.collectAsState(initial = DogDetailsViewState.Idle)
 
     val painter = rememberAsyncImagePainter(
@@ -101,11 +100,10 @@ fun DogDetailsScreen(
                 )
             }
 
-            is DogDetailsViewState.Loading -> {
+            is DogDetailsViewState.Loading,DogDetailsViewState.Idle  -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
 
-            else -> Unit // Handle other states if needed
         }
     }
 }

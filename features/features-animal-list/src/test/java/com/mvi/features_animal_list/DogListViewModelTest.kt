@@ -1,7 +1,6 @@
 package com.mvi.features_animal_list
 
 import test.MainCoroutinesRule
-import com.mvi.common.ApiResult
 import com.mvi.domain.usecase.GetDogBreedsUseCase
 import com.mvi.features_animal_list.mockdata.fetchDogBreedsMockData
 import com.mvi.features_animal_list.intent.DogListIntent
@@ -12,7 +11,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -32,10 +31,12 @@ class DogListViewModelTest {
         mockk(relaxed = true)
     private lateinit var dogListViewModel: DogListViewModel
 
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogListViewModel = DogListViewModel(getDogBreedsUseCase)
+        dogListViewModel = DogListViewModel(getDogBreedsUseCase, UnconfinedTestDispatcher())
     }
 
     @After
@@ -43,11 +44,12 @@ class DogListViewModelTest {
         unmockkAll()
     }
 
+
     @Test
     fun `getDogBreeds success`() = runTest {
         // Arrange
         val fakeDogList = fetchDogBreedsMockData()
-        coEvery { getDogBreedsUseCase() } returns (flowOf(ApiResult.Success(fakeDogList)))
+        coEvery { getDogBreedsUseCase() } returns Result.success(fakeDogList)
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -61,8 +63,8 @@ class DogListViewModelTest {
     @Test
     fun `getDogBreeds error`() = runTest {
         // Arrange
-        val errorMessage = "An unexpected error"
-        coEvery { getDogBreedsUseCase() } returns (flowOf(ApiResult.Error(errorMessage)))
+        val errorMessage = "Error fetching dog breeds"
+        coEvery { getDogBreedsUseCase() } returns Result.failure(Throwable(errorMessage))
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -71,18 +73,5 @@ class DogListViewModelTest {
         val dogListState = dogListViewModel.dogListState.value
         assertTrue(dogListState is DogListViewState.Error)
         assertEquals(errorMessage, (dogListState as DogListViewState.Error).message)
-    }
-
-    @Test
-    fun `getDogBreeds loading`() = runTest {
-        // Arrange
-        coEvery { getDogBreedsUseCase() } returns (flowOf(ApiResult.Loading()))
-
-        // Act
-        dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
-
-        // Assert
-        val dogListState = dogListViewModel.dogListState.value
-        assertTrue(dogListState is DogListViewState.Loading)
     }
 }

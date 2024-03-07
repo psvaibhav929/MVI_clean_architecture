@@ -1,6 +1,5 @@
 package com.mvi.data.repository
 
-import com.mvi.common.ApiResult
 import com.mvi.data.mappers.DogMappers
 import com.mvi.data.network.ErrorFactory
 import com.mvi.data.services.DogService
@@ -15,41 +14,40 @@ class DogRepositoryImpl @Inject constructor(
     private val dogMappers: DogMappers
 ) : DogRepository {
 
-    override suspend fun getDogBreeds(): ApiResult<DogBreed> {
+    override suspend fun getDogBreeds(): Result<DogBreed> {
         return try {
             val response = dogApi.getAllBreeds()
             if (response.isSuccessful) {
                 val dogBreedDto = response.body()
                 if (dogBreedDto != null) {
-                    ApiResult.Success(dogMappers.toDogBreed(dogBreedDto))
+                    Result.success(dogMappers.toDogBreed(dogBreedDto))
                 } else {
-                    ApiResult.Error("Response body is null")
+                    Result.failure(Throwable("Response body is null"))
                 }
             } else {
-                ApiResult.Error(ErrorFactory.getErrorMessageFromCode(response.code()))
+                Result.failure(Throwable(ErrorFactory.getErrorMessageFromCode(response.code())))
             }
         } catch (e: Exception) {
-            ApiResult.Error(ErrorFactory.getErrorMessage(e))
+            Result.failure(Throwable(ErrorFactory.getErrorMessage(e)))
         }
     }
 
 
-
-    override suspend fun getDogDetailsByBreedName(dogBreedName: String): ApiResult<DogDetails> {
+    override suspend fun getDogDetailsByBreedName(dogBreedName: String): Result<DogDetails> {
         return try {
             val response = dogApi.getDogDetailsByBreedName(dogBreedName)
             if (response.isSuccessful) {
                 val dogDetailsDto = response.body()
                 if (dogDetailsDto != null) {
-                    ApiResult.Success(dogMappers.toDogDetails(dogDetailsDto))
+                    Result.success(dogMappers.toDogDetails(dogDetailsDto))
                 } else {
-                    ApiResult.Error("Error getting dog breeds: ${response.message()}")
+                    Result.failure(Throwable("Error getting dog breeds: ${response.message()}"))
                 }
             } else {
-                ApiResult.Error(ErrorFactory.getErrorMessageFromCode(response.code()))
+                Result.failure(Throwable(ErrorFactory.getErrorMessageFromCode(response.code())))
             }
         } catch (e: Exception) {
-            ApiResult.Error(ErrorFactory.getErrorMessage(e))
+            Result.failure(Throwable(ErrorFactory.getErrorMessage(e)))
         }
     }
 }

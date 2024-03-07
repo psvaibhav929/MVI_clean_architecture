@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "LLoyd"
+rootProject.name = "MVI"
 include(":app")
 include(":common")
 include(":domain")

@@ -13,7 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,8 +21,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mvi.common.Screen
+import com.mvi.features_animal_list.intent.DogListIntent
 import com.mvi.features_animal_list.viewmodel.DogListViewModel
 import com.mvi.features_animal_list.viewstate.DogListViewState
 
@@ -34,50 +36,64 @@ fun DogListScreen(
     navController: NavController,
     viewModel: DogListViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = 1) {
+        viewModel.sendIntent(DogListIntent.GetAnimalList)
+    }
+    val state by viewModel.dogListState.collectAsStateWithLifecycle()
 
-    val state by viewModel.dogListState.collectAsState(initial = DogListViewState.Idle)
-
+    val onItemClicked: (String, String) -> Unit = { breedName, dogName ->
+        navController.navigate(Screen.DogDetailScreen.route + "/$breedName/$dogName")
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .testTag(TEST_TAG_DOG_LIST_SCREEN)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            if (state is DogListViewState.Success) {
-                itemsIndexed((state as DogListViewState.Success).data) { index, dogName ->
-                    DogListItem(
-                        modifier = Modifier.fillMaxWidth(),
-                        dogItemIndex = "${index + 1}",
-                        dogName = dogName,
-                        onItemClick = {
-                            navController.navigate(
-                                Screen.DogDetailScreen.route + "/${dogName.dogBreedName}" + "/${dogName.dogFullName}"
-                            )
-                        }
-                    )
+        when (val currentState = state) {
+            is DogListViewState.Success -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    itemsIndexed(currentState.data) { index, dogName ->
+                        DogListItem(
+                            modifier = Modifier.fillMaxWidth(),
+                            dogItemIndex = "${index + 1}",
+                            dogName = dogName,
+                            onItemClick = {
+                                viewModel.sendIntent(
+                                    DogListIntent.DogListItemClicked(
+                                        dogName.dogBreedName,
+                                        dogName.dogFullName,
+                                        onItemClicked
+                                    )
+                                )
+                            }
+                        )
+                    }
                 }
             }
-        }
-        if (state is DogListViewState.Error) {
-            Text(
-                text = (state as DogListViewState.Error).message,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
-        }
-        if (state is DogListViewState.Loading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+
+            is DogListViewState.Error -> {
+                val errorMessage = currentState.message
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .align(Alignment.Center)
+                )
+            }
+
+            is DogListViewState.Loading, DogListViewState.Idle -> {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+
         }
     }
 }
-

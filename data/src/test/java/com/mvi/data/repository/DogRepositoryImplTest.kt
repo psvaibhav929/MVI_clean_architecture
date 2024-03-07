@@ -1,16 +1,19 @@
 package com.mvi.data.repository
 
-import com.mvi.common.ApiResult
 import com.mvi.data.mappers.DogMappers
 import com.mvi.data.mockdata.fetchDogBreedsMockData
 import com.mvi.data.mockdata.fetchDogDetailsMockData
 import com.mvi.data.services.DogService
+import com.mvi.domain.model.DogBreed
+import com.mvi.domain.model.DogDetails
 import com.mvi.domain.repository.DogRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -27,7 +30,7 @@ class DogRepositoryImplTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogMappers = DogMappers()
+        dogMappers = mockk()
         dogRepository = DogRepositoryImpl(dogApi,dogMappers)
     }
 
@@ -35,19 +38,20 @@ class DogRepositoryImplTest {
     fun tearDown() {
         unmockkAll()
     }
-
     @Test
     fun `getDogBreeds should return DogBreed`() = runTest {
         // Arrange
         val fakeDogBreedDto = fetchDogBreedsMockData()
+        val fakeDogBreed = mockk<DogBreed>()
+        every { dogMappers.toDogBreed(fakeDogBreedDto) } returns fakeDogBreed
         coEvery { dogApi.getAllBreeds() } returns Response.success(fakeDogBreedDto)
 
         // Act
         val result = dogRepository.getDogBreeds()
 
         // Assert
-        assert(result is ApiResult.Success)
-        assertEquals(dogMappers.toDogBreed(fakeDogBreedDto), (result as ApiResult.Success).data)
+        assertTrue(result.isSuccess)
+        assertEquals(fakeDogBreed, result.getOrNull())
     }
 
     @Test
@@ -55,6 +59,8 @@ class DogRepositoryImplTest {
         // Arrange
         val dogBreedName = "affenpinscher"
         val fakeDogDetailsDto = fetchDogDetailsMockData()
+        val fakeDogDetails = mockk<DogDetails>()
+        every { dogMappers.toDogDetails(fakeDogDetailsDto) } returns fakeDogDetails
         coEvery { dogApi.getDogDetailsByBreedName(dogBreedName) } returns Response.success(
             fakeDogDetailsDto
         )
@@ -63,7 +69,7 @@ class DogRepositoryImplTest {
         val result = dogRepository.getDogDetailsByBreedName(dogBreedName)
 
         // Assert
-        assert(result is ApiResult.Success)
-        assertEquals(dogMappers.toDogDetails(fakeDogDetailsDto), (result as ApiResult.Success).data)
+        assertTrue(result.isSuccess)
+        assertEquals(fakeDogDetails, result.getOrNull())
     }
 }
