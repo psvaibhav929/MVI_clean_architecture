@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.mvi.features_animal_details.intent.DogDetailsIntent
+import com.mvi.features_animal_details.viewmodel.DogDetailsViewModel
 import com.mvi.features_animal_details.viewstate.DogDetailsViewState
 
 const val TEST_TAG_DOG_DETAILS_SCREEN = "dog_details_screen"

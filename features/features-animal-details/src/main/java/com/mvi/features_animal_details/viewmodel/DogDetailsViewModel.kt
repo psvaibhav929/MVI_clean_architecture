@@ -1,4 +1,4 @@
-package com.mvi.features_animal_details
+package com.mvi.features_animal_details.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

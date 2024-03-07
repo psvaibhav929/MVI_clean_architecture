@@ -4,6 +4,7 @@ package com.mvi.features_animal_details
  import com.mvi.domain.usecase.GetDogDetailsUseCase
  import com.mvi.features_animal_details.intent.DogDetailsIntent
  import com.mvi.features_animal_details.mockdata.fetchDogDetailsMockData
+ import com.mvi.features_animal_details.viewmodel.DogDetailsViewModel
  import com.mvi.features_animal_details.viewstate.DogDetailsViewState
  import io.mockk.MockKAnnotations
  import io.mockk.coEvery
@@ -22,7 +23,6 @@ package com.mvi.features_animal_details
 
 class DogDetailsViewModelTest {
 
-    // Set the main coroutine dispatcher for testing
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val mainCoroutineRule =  MainCoroutinesRule()

@@ -28,8 +28,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MainActivityTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
+                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {

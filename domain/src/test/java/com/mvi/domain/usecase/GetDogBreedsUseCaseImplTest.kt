@@ -1,7 +1,6 @@
 package com.mvi.domain.usecase
 
 import com.mvi.domain.mockdata.fetchDogBreedsMockData
-import com.mvi.domain.model.DogBreed
 import com.mvi.domain.repository.DogRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -9,7 +8,6 @@ import io.mockk.mockk
 import io.mockk.unmockkAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
