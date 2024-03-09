@@ -7,7 +7,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.lloyd.features"
+    namespace = "com.mvi.features"
     buildFeatures {
         compose = true
     }

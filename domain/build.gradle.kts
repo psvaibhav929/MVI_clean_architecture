@@ -5,7 +5,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.lloyd.domain"
+    namespace = "com.mvi.domain"
 }
 
 dependencies {

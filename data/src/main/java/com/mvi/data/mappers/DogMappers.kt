@@ -1,6 +1,6 @@
 package com.mvi.data.mappers
 
-import com.mvi.common.capitalizeFirstLetter
+import com.mvi.data.common.capitalizeFirstLetter
 import com.mvi.data.dto.DogBreedDto
 import com.mvi.data.dto.DogDetailsDto
 import com.mvi.domain.model.DogBreed

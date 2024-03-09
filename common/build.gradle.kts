@@ -6,7 +6,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.lloyd.common"
+    namespace = "com.mvi.common"
 }
 
 

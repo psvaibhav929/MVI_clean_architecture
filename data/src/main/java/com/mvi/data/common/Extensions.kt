@@ -1,4 +1,4 @@
-package com.mvi.common
+package com.mvi.data.common
 
 import java.util.Locale
 

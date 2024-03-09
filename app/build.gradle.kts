@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.LLoyd"
+    namespace = "com.MVI"
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
@@ -18,7 +18,7 @@ android {
         versionName = ProjectConfig.versionName
 
 //        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        
+
 
         vectorDrawables {
             useSupportLibrary = true

@@ -6,7 +6,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.lloyd.features_animal_details"
+    namespace = "com.mvi.features_animal_details"
     buildFeatures {
         compose = true
     }
