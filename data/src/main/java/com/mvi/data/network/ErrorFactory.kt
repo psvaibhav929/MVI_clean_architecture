@@ -1,5 +1,6 @@
 package com.mvi.data.network
 
+import com.google.gson.JsonParseException
 import java.io.IOException
 
 object ErrorFactory {
@@ -7,6 +8,7 @@ object ErrorFactory {
     fun getErrorMessage(e: Exception): String {
         return when (e) {
             is IOException -> "Couldn't reach server. Check your internet connection."
+            is JsonParseException -> "JSON parsing error: ${e.message}"
             else -> "An unexpected error occurred: ${e.localizedMessage}"
         }
     }

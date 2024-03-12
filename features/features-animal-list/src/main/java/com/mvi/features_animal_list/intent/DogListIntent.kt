@@ -5,7 +5,6 @@ sealed class DogListIntent {
     data class DogListItemClicked(
         val dogBreedName: String,
         val dogName: String,
-        val onClick: (String, String) -> Unit
     ) : DogListIntent()
 
 }

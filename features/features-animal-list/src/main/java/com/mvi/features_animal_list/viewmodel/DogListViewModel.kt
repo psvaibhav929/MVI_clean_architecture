@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.mvi.common.di.IoDispatcher
 import com.mvi.domain.usecase.GetDogBreedsUseCase
 import com.mvi.features_animal_list.intent.DogListIntent
+import com.mvi.features_animal_list.viewstate.DogListClickState
 import com.mvi.features_animal_list.viewstate.DogListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -23,8 +25,15 @@ class DogListViewModel @Inject constructor(
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
+
     private val _dogListState = MutableStateFlow<DogListViewState>(DogListViewState.Idle)
-    val dogListState: StateFlow<DogListViewState> = _dogListState.asStateFlow()
+    val dogListState: StateFlow<DogListViewState>
+        get() = _dogListState.asStateFlow()
+
+    private val _dogListClickState = MutableSharedFlow<DogListClickState>()
+    val dogListClickState: SharedFlow<DogListClickState>
+        get() = _dogListClickState
+
     private val _dogListEvents = MutableSharedFlow<DogListIntent>()
 
 
@@ -34,15 +43,20 @@ class DogListViewModel @Inject constructor(
 
     private fun handleIntents() {
         viewModelScope.launch {
-            _dogListEvents.collect { intent ->
-                when (intent) {
+            _dogListEvents.collect { dogEvent ->
+                when (dogEvent) {
                     is DogListIntent.GetAnimalList -> withContext(ioDispatcher) {
                         _dogListState.emit(DogListViewState.Loading)
                         getDogBreeds()
                     }
 
                     is DogListIntent.DogListItemClicked -> {
-                        intent.onClick(intent.dogBreedName, intent.dogName)
+                        _dogListClickState.emit(
+                            DogListClickState.NavigateToDetailScreen(
+                                dogEvent.dogBreedName,
+                                dogEvent.dogName
+                            )
+                        )
                     }
 
                 }

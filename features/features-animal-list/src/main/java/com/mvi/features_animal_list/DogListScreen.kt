@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.mvi.common.Screen
 import com.mvi.features_animal_list.intent.DogListIntent
 import com.mvi.features_animal_list.viewmodel.DogListViewModel
+import com.mvi.features_animal_list.viewstate.DogListClickState
 import com.mvi.features_animal_list.viewstate.DogListViewState
 
 
@@ -36,14 +37,17 @@ fun DogListScreen(
     navController: NavController,
     viewModel: DogListViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = 1) {
-        viewModel.sendIntent(DogListIntent.GetAnimalList)
-    }
     val state by viewModel.dogListState.collectAsStateWithLifecycle()
-
-    val onItemClicked: (String, String) -> Unit = { breedName, dogName ->
-        navController.navigate(Screen.DogDetailScreen.route + "/$breedName/$dogName")
+    LaunchedEffect(Unit) {
+        viewModel.sendIntent(DogListIntent.GetAnimalList)
+        viewModel.dogListClickState.collect { clickState ->
+            if (clickState is DogListClickState.NavigateToDetailScreen) {
+                val (breedName, dogName) = clickState
+                navController.navigate(Screen.DogDetailScreen.route + "/$breedName/$dogName")
+            }
+        }
     }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +72,6 @@ fun DogListScreen(
                                     DogListIntent.DogListItemClicked(
                                         dogName.dogBreedName,
                                         dogName.dogFullName,
-                                        onItemClicked
                                     )
                                 )
                             }
@@ -96,4 +99,5 @@ fun DogListScreen(
 
         }
     }
+
 }
