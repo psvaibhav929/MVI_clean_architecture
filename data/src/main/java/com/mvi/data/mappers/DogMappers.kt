@@ -30,7 +30,8 @@ class DogMappers @Inject constructor(){
                 dogBreeds.add(
                     DogName(
                         dogFullName = capitalizedBreedName,
-                        dogBreedName = breed
+                        dogBreedName = breed,
+                        dogSubBreedName = ""
                     )
                 )
             }
