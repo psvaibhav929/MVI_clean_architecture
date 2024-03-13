@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -23,7 +22,7 @@ import javax.inject.Inject
 class DogListViewModel @Inject constructor(
     private val getDogBreedsUseCase: GetDogBreedsUseCase,
     @IoDispatcher
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _dogListState = MutableStateFlow<DogListViewState>(DogListViewState.Idle)
@@ -34,61 +33,47 @@ class DogListViewModel @Inject constructor(
     val dogListClickState: SharedFlow<DogListClickState>
         get() = _dogListClickState
 
-    private val _dogListEvents = MutableSharedFlow<DogListIntent>()
-
-
     init {
-        handleIntents()
+        sendIntent(DogListIntent.GetAnimalList)
     }
 
-    private fun handleIntents() {
-        viewModelScope.launch {
-            _dogListEvents.collect { dogEvent ->
-                when (dogEvent) {
-                    is DogListIntent.GetAnimalList -> withContext(ioDispatcher) {
-                        _dogListState.emit(DogListViewState.Loading)
-                        getDogBreeds()
-                    }
-
-                    is DogListIntent.DogListItemClicked -> {
-                        _dogListClickState.emit(
-                            DogListClickState.NavigateToDetailScreen(
-                                dogEvent.dogBreedName,
-                                dogEvent.dogName
-                            )
-                        )
-                    }
-
-                }
-
-            }
-        }
-    }
 
     fun sendIntent(intent: DogListIntent) {
-        viewModelScope.launch {
-            _dogListEvents.emit(intent)
+        when (intent) {
+            is DogListIntent.GetAnimalList -> getDogBreeds()
+            is DogListIntent.DogListItemClicked -> navigateDetailsScreen(intent)
         }
     }
 
-    private suspend fun getDogBreeds() {
-        getDogBreedsUseCase().fold(
-            onSuccess = { dogList ->
-                _dogListState.emit(
-                    DogListViewState.Success(
-                        dogList.dogs
-                    )
-                )
+    private fun navigateDetailsScreen(intent: DogListIntent.DogListItemClicked) {
+        viewModelScope.launch {
+            _dogListClickState.emit(
+                DogListClickState.NavigateToDetailScreen(intent.dogBreedName,intent.dogName)
+            )
+        }
+    }
 
-            },
-            onFailure = { error ->
-                _dogListState.emit(
-                    DogListViewState.Error(
-                        error.message ?: "An unexpected error"
+    private fun getDogBreeds() {
+        viewModelScope.launch(ioDispatcher) {
+            getDogBreedsUseCase().fold(
+                onSuccess = { dogList ->
+                    _dogListState.emit(
+                        DogListViewState.Success(
+                            dogList.dogs
+                        )
                     )
-                )
 
-            }
-        )
+                },
+                onFailure = { error ->
+                    _dogListState.emit(
+                        DogListViewState.Error(
+                            error.message ?: "An unexpected error"
+                        )
+                    )
+
+                }
+            )
+
+        }
     }
 }

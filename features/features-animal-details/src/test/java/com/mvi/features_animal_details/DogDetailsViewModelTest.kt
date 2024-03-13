@@ -20,7 +20,7 @@ package com.mvi.features_animal_details
  import org.junit.Rule
  import org.junit.Test
  import test.MainCoroutinesRule
-
+//relaxed = true
 class DogDetailsViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)

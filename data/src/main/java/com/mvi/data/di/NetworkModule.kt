@@ -1,6 +1,6 @@
 package com.mvi.data.di
 
-import com.mvi.common.Constants
+import com.mvi.data.constant.Constants
 import com.mvi.data.services.DogService
 import dagger.Module
 import dagger.Provides

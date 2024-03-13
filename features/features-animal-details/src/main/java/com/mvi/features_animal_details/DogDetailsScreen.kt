@@ -13,7 +13,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.mvi.features_animal_details.intent.DogDetailsIntent
 import com.mvi.features_animal_details.viewmodel.DogDetailsViewModel
 import com.mvi.features_animal_details.viewstate.DogDetailsViewState
 
@@ -32,15 +30,10 @@ const val TEST_TAG_DOG_DETAILS_SCREEN = "dog_details_screen"
 
 @Composable
 fun DogDetailsScreen(
-    dogBreedName: String?,
     dogFullName: String?,
     viewModel: DogDetailsViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = null, block = {
-        dogBreedName?.let {
-            viewModel.sendIntent(DogDetailsIntent.GetDogDetails(it))
-        }
-    })
+
     val state by viewModel.dogDetailsState.collectAsState(initial = DogDetailsViewState.Idle)
 
     val painter = rememberAsyncImagePainter(

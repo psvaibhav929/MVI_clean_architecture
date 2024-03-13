@@ -30,7 +30,6 @@ object JetpackCompose {
     const val composeMaterial = "androidx.compose.material3:material3"
     const val composeNavigation = "androidx.navigation:navigation-compose:2.7.7"
     const val composeLifecycle = "androidx.lifecycle:lifecycle-runtime-compose:2.7.0"
-    const val composeRunTime = "androidx.compose.runtime:runtime:2.7.0"
 }
 
 object AndroidTest {

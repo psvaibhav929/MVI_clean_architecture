@@ -13,11 +13,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.mvi.common.Constants
-import com.mvi.common.Screen
+import com.mvi.common.constant.Constants
+import com.mvi.features.constants.Screen
+import com.mvi.features.theme.MainActivityTheme
 import com.mvi.features_animal_details.DogDetailsScreen
 import com.mvi.features_animal_list.DogListScreen
-import com.mvi.features.theme.MainActivityTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MainActivityTheme {
-                 Surface(
+                Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
@@ -40,23 +40,26 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.DogListScreen.route
                         ) {
-                             DogListScreen(
-                                navController = navController,
+                            DogListScreen(
+                                { dogBreed, dogName ->
+                                    navController.navigate(Screen.DogDetailScreen.route + "/$dogBreed/$dogName")
+                                }
                             )
                         }
-                         composable(
+                        composable(
                             route = Screen.DogDetailScreen.route + "/{${Constants.PARAM_DOG_BREED_NAME}}" + "/{${Constants.PARAM_DOG_FULL_NAME}}",
                             arguments = listOf(
-                                navArgument(Constants.PARAM_DOG_BREED_NAME) { type = NavType.StringType },
-                                navArgument(Constants.PARAM_DOG_FULL_NAME) { type = NavType.StringType },
+                                navArgument(Constants.PARAM_DOG_BREED_NAME) {
+                                    type = NavType.StringType
+                                },
+                                navArgument(Constants.PARAM_DOG_FULL_NAME) {
+                                    type = NavType.StringType
+                                },
                             )
                         ) { navBackStackEntry ->
-                            val dogBreedName = navBackStackEntry.arguments?.getString(Constants.PARAM_DOG_BREED_NAME)
-                            val dogFullName = navBackStackEntry.arguments?.getString(Constants.PARAM_DOG_FULL_NAME)
-                            DogDetailsScreen(
-                                dogBreedName = dogBreedName,
-                                dogFullName = dogFullName,
-                            )
+                            val dogFullName =
+                                navBackStackEntry.arguments?.getString(Constants.PARAM_DOG_FULL_NAME)
+                            DogDetailsScreen(dogFullName)
                         }
                     }
                 }

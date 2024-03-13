@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.mvi.common.Screen
 import com.mvi.features_animal_list.intent.DogListIntent
 import com.mvi.features_animal_list.viewmodel.DogListViewModel
 import com.mvi.features_animal_list.viewstate.DogListClickState
@@ -34,19 +33,12 @@ const val TEST_TAG_DOG_LIST_SCREEN = "dog_list_screen"
 
 @Composable
 fun DogListScreen(
-    navController: NavController,
-    viewModel: DogListViewModel = hiltViewModel()
-) {
+
+    callback: (dogBreed: String, dogName: String) -> Unit,
+    viewModel: DogListViewModel = hiltViewModel(),
+
+    ) {
     val state by viewModel.dogListState.collectAsStateWithLifecycle()
-    LaunchedEffect(Unit) {
-        viewModel.sendIntent(DogListIntent.GetAnimalList)
-        viewModel.dogListClickState.collect { clickState ->
-            if (clickState is DogListClickState.NavigateToDetailScreen) {
-                val (breedName, dogName) = clickState
-                navController.navigate(Screen.DogDetailScreen.route + "/$breedName/$dogName")
-            }
-        }
-    }
 
     Box(
         modifier = Modifier
@@ -96,7 +88,15 @@ fun DogListScreen(
             is DogListViewState.Loading, DogListViewState.Idle -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
+        }
+    }
 
+    LaunchedEffect(Unit) {
+        viewModel.dogListClickState.collect { clickState ->
+            if (clickState is DogListClickState.NavigateToDetailScreen) {
+                val (breedName, dogName) = clickState
+                callback.invoke(breedName, dogName)
+            }
         }
     }
 
