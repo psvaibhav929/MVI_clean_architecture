@@ -3,6 +3,7 @@ package com.mvi.features_animal_list.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mvi.common.di.IoDispatcher
+import com.mvi.domain.result.ApiResult
 import com.mvi.domain.usecase.GetDogBreedsUseCase
 import com.mvi.features_animal_list.intent.DogListIntent
 import com.mvi.features_animal_list.viewstate.DogListClickState
@@ -48,32 +49,32 @@ class DogListViewModel @Inject constructor(
     private fun navigateDetailsScreen(intent: DogListIntent.DogListItemClicked) {
         viewModelScope.launch {
             _dogListClickState.emit(
-                DogListClickState.NavigateToDetailScreen(intent.dogBreedName,intent.dogName)
+                DogListClickState.NavigateToDetailScreen(intent.dogBreedName, intent.dogName)
             )
         }
     }
 
-    private fun getDogBreeds() {
+     private fun getDogBreeds() {
         viewModelScope.launch(ioDispatcher) {
-            getDogBreedsUseCase().fold(
-                onSuccess = { dogList ->
+            when (val dogList = getDogBreedsUseCase()) {
+                is ApiResult.Success -> {
                     _dogListState.emit(
                         DogListViewState.Success(
-                            dogList.dogs
+                            dogList.data.dogs
                         )
                     )
+                }
 
-                },
-                onFailure = { error ->
+                is ApiResult.Error -> {
+                    val errorMessage = dogList.exception?.message ?: "An unexpected error"
                     _dogListState.emit(
                         DogListViewState.Error(
-                            error.message ?: "An unexpected error"
+                            errorMessage
                         )
                     )
-
                 }
-            )
-
+            }
         }
     }
+
 }

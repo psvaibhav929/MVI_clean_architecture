@@ -1,9 +1,11 @@
 package com.mvi.features_animal_list
 
+import com.mvi.domain.result.ApiResult
 import test.MainCoroutinesRule
 import com.mvi.domain.usecase.GetDogBreedsUseCase
 import com.mvi.features_animal_list.mockdata.fetchDogBreedsMockData
 import com.mvi.features_animal_list.intent.DogListIntent
+import com.mvi.features_animal_list.mockdata.GRT_DOG_BREEDS_ERROR
 import com.mvi.features_animal_list.viewmodel.DogListViewModel
 import com.mvi.features_animal_list.viewstate.DogListViewState
 import io.mockk.MockKAnnotations
@@ -49,7 +51,7 @@ class DogListViewModelTest {
     fun `getDogBreeds success`() = runTest {
         // Arrange
         val fakeDogList = fetchDogBreedsMockData()
-        coEvery { getDogBreedsUseCase() } returns Result.success(fakeDogList)
+        coEvery { getDogBreedsUseCase() } returns ApiResult.Success(fakeDogList)
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -63,8 +65,8 @@ class DogListViewModelTest {
     @Test
     fun `getDogBreeds error`() = runTest {
         // Arrange
-        val errorMessage = "Error fetching dog breeds"
-        coEvery { getDogBreedsUseCase() } returns Result.failure(Throwable(errorMessage))
+        val errorMessage = GRT_DOG_BREEDS_ERROR
+        coEvery { getDogBreedsUseCase() } returns ApiResult.Error(Throwable(errorMessage))
 
         // Act
         dogListViewModel.sendIntent(DogListIntent.GetAnimalList)
@@ -72,6 +74,9 @@ class DogListViewModelTest {
         // Assert
         val dogListState = dogListViewModel.dogListState.value
         assertTrue(dogListState is DogListViewState.Error)
-        assertEquals(errorMessage, (dogListState as DogListViewState.Error).message)
+        assertEquals(
+            errorMessage,
+            (dogListState as DogListViewState.Error).message
+        )
     }
 }

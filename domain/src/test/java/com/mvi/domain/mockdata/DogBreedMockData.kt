@@ -8,6 +8,7 @@ import com.mvi.domain.model.DogDetails
 
 private const val dogBreedsMockJson =  "dog_breed.json"
 
+
 private val gson by lazy { Gson() }
 
 fun fetchDogBreedsMockData(): DogBreed {

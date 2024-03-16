@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mvi.common.constant.Constants
 import com.mvi.common.di.IoDispatcher
+import com.mvi.domain.result.ApiResult
 import com.mvi.domain.usecase.GetDogDetailsUseCase
 import com.mvi.features_animal_details.intent.DogDetailsIntent
 import com.mvi.features_animal_details.viewstate.DogDetailsViewState
@@ -40,26 +41,28 @@ class DogDetailsViewModel @Inject constructor(
             }
         }
     }
+
     private fun getDogDetailsByBreedName(dogBreedName: String) {
         viewModelScope.launch(ioDispatcher) {
             _dogDetailsState.emit(DogDetailsViewState.Loading)
-            getDogDetailsUseCase(dogBreedName).fold(
-                onSuccess = { dogDetails ->
+            when (val dogBreedDetails = getDogDetailsUseCase(dogBreedName)) {
+                is ApiResult.Success -> {
                     _dogDetailsState.emit(
                         DogDetailsViewState.Success(
-                            dogImageUrl = dogDetails.dogImageUrl
-                        )
-                    )
-                },
-                onFailure = { error ->
-                    _dogDetailsState.emit(
-                        DogDetailsViewState.Error(
-                            error.message ?: "An unexpected error"
+                            dogImageUrl = dogBreedDetails.data.dogImageUrl
                         )
                     )
                 }
-            )
 
+                is ApiResult.Error -> {
+                    _dogDetailsState.emit(
+                        DogDetailsViewState.Error(
+                            dogBreedDetails.exception?.message ?: "An unexpected error"
+                        )
+                    )
+
+                }
+            }
         }
 
     }

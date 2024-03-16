@@ -2,13 +2,11 @@ package com.mvi.data.mappers
 
 import com.mvi.data.common.capitalizeFirstLetter
 import com.mvi.data.dto.DogBreedDto
-import com.mvi.data.dto.DogDetailsDto
 import com.mvi.domain.model.DogBreed
-import com.mvi.domain.model.DogDetails
 import com.mvi.domain.model.DogName
 import javax.inject.Inject
 
-class DogMappers @Inject constructor(){
+class DogListMappers @Inject constructor() {
     fun toDogBreed(dto: DogBreedDto): DogBreed {
         val dogBreeds = arrayListOf<DogName>()
 
@@ -31,7 +29,7 @@ class DogMappers @Inject constructor(){
                     DogName(
                         dogFullName = capitalizedBreedName,
                         dogBreedName = breed,
-                        dogSubBreedName = ""
+                        dogSubBreedName = subBreeds.firstOrNull() ?: ""
                     )
                 )
             }
@@ -39,7 +37,5 @@ class DogMappers @Inject constructor(){
 
         return DogBreed(dogBreeds)
     }
-    fun toDogDetails(dto: DogDetailsDto): DogDetails {
-        return DogDetails(dto.message)
-    }
+
 }

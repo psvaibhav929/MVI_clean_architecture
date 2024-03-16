@@ -1,12 +1,14 @@
 package com.mvi.data.repository
 
-import com.mvi.data.mappers.DogMappers
+import com.mvi.data.mappers.DogDetailsMappers
+import com.mvi.data.mappers.DogListMappers
 import com.mvi.data.mockdata.fetchDogBreedsMockData
 import com.mvi.data.mockdata.fetchDogDetailsMockData
 import com.mvi.data.services.DogService
 import com.mvi.domain.model.DogBreed
 import com.mvi.domain.model.DogDetails
 import com.mvi.domain.repository.DogRepository
+import com.mvi.domain.result.ApiResult
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -19,57 +21,78 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
+import java.io.IOException
 
 class DogRepositoryImplTest {
     private var dogApi: DogService = mockk()
-    private lateinit var dogMappers: DogMappers
+    private lateinit var dogDetailsMappers: DogDetailsMappers
+    private lateinit var dogListMappers: DogListMappers
     private lateinit var dogRepository: DogRepository
-
-
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogMappers = mockk()
-        dogRepository = DogRepositoryImpl(dogApi,dogMappers)
+        dogDetailsMappers = mockk()
+        dogListMappers = mockk()
+        dogRepository = DogRepositoryImpl(dogApi, dogDetailsMappers, dogListMappers)
     }
 
     @After
     fun tearDown() {
         unmockkAll()
     }
+
     @Test
     fun `getDogBreeds should return DogBreed`() = runTest {
         // Arrange
         val fakeDogBreedDto = fetchDogBreedsMockData()
         val fakeDogBreed = mockk<DogBreed>()
-        every { dogMappers.toDogBreed(fakeDogBreedDto) } returns fakeDogBreed
+        every { dogListMappers.toDogBreed(fakeDogBreedDto) } returns fakeDogBreed
         coEvery { dogApi.getAllBreeds() } returns Response.success(fakeDogBreedDto)
 
         // Act
         val result = dogRepository.getDogBreeds()
 
         // Assert
-        assertTrue(result.isSuccess)
-        assertEquals(fakeDogBreed, result.getOrNull())
+        assertTrue(result is ApiResult.Success)
+        assertEquals(fakeDogBreed, (result as ApiResult.Success).data)
     }
 
     @Test
     fun `getDogDetailsByBreedName should return DogDetails`() = runTest {
         // Arrange
-        val dogBreedName = "affenpinscher"
+
         val fakeDogDetailsDto = fetchDogDetailsMockData()
         val fakeDogDetails = mockk<DogDetails>()
-        every { dogMappers.toDogDetails(fakeDogDetailsDto) } returns fakeDogDetails
-        coEvery { dogApi.getDogDetailsByBreedName(dogBreedName) } returns Response.success(
+        every { dogDetailsMappers.toDogDetails(fakeDogDetailsDto) } returns fakeDogDetails
+        coEvery { dogApi.getDogDetailsByBreedName(DOG_BREED_NAME) } returns Response.success(
             fakeDogDetailsDto
         )
 
         // Act
-        val result = dogRepository.getDogDetailsByBreedName(dogBreedName)
+        val result = dogRepository.getDogDetailsByBreedName(DOG_BREED_NAME)
 
         // Assert
-        assertTrue(result.isSuccess)
-        assertEquals(fakeDogDetails, result.getOrNull())
+        assertTrue(result is ApiResult.Success)
+        assertEquals(fakeDogDetails, (result as ApiResult.Success).data)
+    }
+
+    @Test
+    fun `getDogDetailsByBreedName should return ApiResult Error`() = runTest {
+        // Arrange
+        val errorMessage = ERROR_MESSAGE
+        coEvery { dogApi.getDogDetailsByBreedName(DOG_BREED_NAME) } throws IOException(errorMessage)
+
+        // Act
+        val result = dogRepository.getDogDetailsByBreedName(DOG_BREED_NAME)
+
+        // Assert
+        assertTrue(result is ApiResult.Error)
+        assertEquals(errorMessage, (result as ApiResult.Error).exception?.message)
+    }
+
+    companion object {
+        private const val DOG_BREED_NAME = "affenpinscher"
+        private const val ERROR_MESSAGE = "Couldn't reach server. Check your internet connection."
     }
 }

@@ -7,6 +7,7 @@ import com.mvi.data.dto.DogDetailsDto
 
 
 private const val dogBreedsMockJson = "dog_breed.json"
+private const val dogDetailsMockJson = "dog_details.json"
 
 private val gson by lazy { Gson() }
 
@@ -16,8 +17,6 @@ fun fetchDogBreedsMockData(): DogBreedDto {
         DogBreedDto::class.java
     )
 }
-
-private const val dogDetailsMockJson = "dog_details.json"
 fun fetchDogDetailsMockData(): DogDetailsDto {
     return gson.fromJson(TestHelper.readFileResource("/$dogDetailsMockJson"), DogDetailsDto::class.java)
 }
