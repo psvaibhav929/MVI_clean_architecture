@@ -38,7 +38,7 @@ class DogListViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        dogListViewModel = DogListViewModel(getDogBreedsUseCase, UnconfinedTestDispatcher())
+        dogListViewModel = DogListViewModel(getDogBreedsUseCase, mainCoroutineRule.testDispatcher)
     }
 
     @After

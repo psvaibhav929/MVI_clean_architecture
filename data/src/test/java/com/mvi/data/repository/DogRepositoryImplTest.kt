@@ -5,13 +5,10 @@ import com.mvi.data.mappers.DogListMappers
 import com.mvi.data.mockdata.fetchDogBreedsMockData
 import com.mvi.data.mockdata.fetchDogDetailsMockData
 import com.mvi.data.services.DogService
-import com.mvi.domain.model.DogBreed
-import com.mvi.domain.model.DogDetails
 import com.mvi.domain.repository.DogRepository
 import com.mvi.domain.result.ApiResult
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import junit.framework.TestCase.assertEquals
@@ -33,7 +30,8 @@ class DogRepositoryImplTest {
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
         dogDetailsMappers = mockk()
-        dogListMappers = mockk()
+        dogListMappers = DogListMappers()
+        dogDetailsMappers = DogDetailsMappers()
         dogRepository = DogRepositoryImpl(dogApi, dogDetailsMappers, dogListMappers)
     }
 
@@ -46,10 +44,9 @@ class DogRepositoryImplTest {
     fun `getDogBreeds should return DogBreed`() = runTest {
         // Arrange
         val fakeDogBreedDto = fetchDogBreedsMockData()
-        val fakeDogBreed = mockk<DogBreed>()
-        every { dogListMappers.toDogBreed(fakeDogBreedDto) } returns fakeDogBreed
-        coEvery { dogApi.getAllBreeds() } returns Response.success(fakeDogBreedDto)
+        val fakeDogBreed = dogListMappers.toDogBreed(fakeDogBreedDto)
 
+        coEvery { dogApi.getAllBreeds() } returns Response.success(fakeDogBreedDto)
         // Act
         val result = dogRepository.getDogBreeds()
 
@@ -63,8 +60,8 @@ class DogRepositoryImplTest {
         // Arrange
 
         val fakeDogDetailsDto = fetchDogDetailsMockData()
-        val fakeDogDetails = mockk<DogDetails>()
-        every { dogDetailsMappers.toDogDetails(fakeDogDetailsDto) } returns fakeDogDetails
+        val fakeDogDetails = dogDetailsMappers.toDogDetails(fakeDogDetailsDto)
+
         coEvery { dogApi.getDogDetailsByBreedName(DOG_BREED_NAME) } returns Response.success(
             fakeDogDetailsDto
         )

@@ -42,7 +42,7 @@ class DogDetailsViewModelTest {
         MockKAnnotations.init(this, relaxUnitFun = true)
         every { savedStateHandle.get<String>("dog_breed_name") } returns dogBreedName
         dogListViewModel =
-            DogDetailsViewModel(getDogBreedsUseCase, UnconfinedTestDispatcher(), savedStateHandle)
+            DogDetailsViewModel(getDogBreedsUseCase, mainCoroutineRule.testDispatcher, savedStateHandle)
     }
 
     @After

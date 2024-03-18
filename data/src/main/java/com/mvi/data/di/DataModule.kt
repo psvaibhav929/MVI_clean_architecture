@@ -9,13 +9,9 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object DataModule {
-    @Module
-    @InstallIn(ViewModelComponent::class)
-    abstract class DataLayerModule {
-        @Binds
-        abstract fun bindDogRepository(
-            dogRepositoryImpl: DogRepositoryImpl
-        ): DogRepository
-    }
+abstract class DataModule {
+    @Binds
+    abstract fun bindDogRepository(
+        dogRepositoryImpl: DogRepositoryImpl
+    ): DogRepository
 }

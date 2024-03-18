@@ -15,13 +15,13 @@ import org.junit.Test
 
 
 class DogListMappersTest {
+    private val mapper = DogListMappers()
 
     @Test
     fun `test toDogBreed with multiple sub-breeds`() {
-        val dto = loadMultipleSubBreeds( )
+        val dto = loadMultipleSubBreeds()
         val expected = loadMultipleSubBreedsExpected()
 
-        val mapper = DogListMappers()
         val result = mapper.toDogBreed(dto)
 
         assertEquals(expected.dogs.size, result.dogs.size)
@@ -32,10 +32,7 @@ class DogListMappersTest {
     fun `test toDogBreed with single sub-breed`() {
         val dto = loadSingleSubBreed()
         val expected = loadSingleSubBreedExpected()
-
-        val mapper = DogListMappers()
         val result = mapper.toDogBreed(dto)
-
         assertEquals(expected.dogs.size, result.dogs.size)
         assertEquals(expected, result)
     }
@@ -45,7 +42,6 @@ class DogListMappersTest {
         val dto = loadNoSubBreeds()
         val expected = loadNoSubBreedsExpected()
 
-        val mapper = DogListMappers()
         val result = mapper.toDogBreed(dto)
 
         assertEquals(expected.dogs.size, result.dogs.size)
@@ -57,7 +53,6 @@ class DogListMappersTest {
         val dto = loadEmptyInput()
         val expected = DogBreed(emptyList())
 
-        val mapper = DogListMappers()
         val result = mapper.toDogBreed(dto)
 
         assertEquals(expected.dogs.size, result.dogs.size)
@@ -69,7 +64,6 @@ class DogListMappersTest {
         val dto = loadEmptySubBreed()
         val expected = loadEmptySubBreedExpected()
 
-        val mapper = DogListMappers()
         val result = mapper.toDogBreed(dto)
 
         assertEquals(expected.dogs.size, result.dogs.size)

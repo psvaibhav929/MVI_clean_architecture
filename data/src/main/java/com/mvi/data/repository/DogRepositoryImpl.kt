@@ -18,11 +18,9 @@ class DogRepositoryImpl @Inject constructor(
 ) : DogRepository {
 
     override suspend fun getDogBreeds(): ApiResult<DogBreed> {
-        return SafeApiCall.call({ dogApi.getAllBreeds() }) { dogBreedDto ->
-            dogListMappers.toDogBreed(
-                dogBreedDto
-            )
-        }
+        return SafeApiCall.call(
+            { dogApi.getAllBreeds() },
+            { dogBreedDto -> dogListMappers.toDogBreed(dogBreedDto) })
     }
 
 

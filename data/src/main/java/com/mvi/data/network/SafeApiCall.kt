@@ -4,7 +4,10 @@ import com.mvi.domain.result.ApiResult
 import retrofit2.Response
 
 object SafeApiCall {
-    suspend fun <T : Any, R : Any> call(apiCall: suspend () -> Response<T>, mapper: (T) -> R): ApiResult<R> {
+    suspend fun <T : Any, R : Any> call(
+        apiCall: suspend () -> Response<T>,
+        mapper: (T) -> R
+    ): ApiResult<R> {
         return try {
             val response = apiCall.invoke()
             if (response.isSuccessful) {
@@ -20,4 +23,5 @@ object SafeApiCall {
         } catch (e: Exception) {
             ApiResult.Error(Throwable(ErrorFactory.getErrorMessage(e)))
         }
-    }}
+    }
+}
