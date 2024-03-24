@@ -6,7 +6,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DogDetailsMappersTest {
-
     @Test
     fun `test toDogDetails`() {
         val dto = loadDogDetailsDto()
