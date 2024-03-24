@@ -14,12 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mvi.common.extensions.capitalizeFirstLetter
+import com.mvi.domain.model.DogName
 
 @Composable
 fun DogListItem(
     modifier: Modifier = Modifier,
     dogItemIndex: String,
-    dogName: com.mvi.domain.model.DogName,
+    dogName: DogName,
     onItemClick: (String) -> Unit
 ) {
     Card(
@@ -39,7 +41,7 @@ fun DogListItem(
             )
             Spacer(modifier = Modifier.width(24.dp))
             Text(
-                text = dogName.dogFullName,
+                text = dogName.dogFullName.capitalizeFirstLetter()  ,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .weight(1f)

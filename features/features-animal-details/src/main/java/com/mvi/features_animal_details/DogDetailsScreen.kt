@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.mvi.common.extensions.capitalizeFirstLetter
 import com.mvi.features_animal_details.viewmodel.DogDetailsViewModel
 import com.mvi.features_animal_details.viewstate.DogDetailsViewState
 
@@ -65,7 +66,7 @@ fun DogDetailsScreen(
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                         Text(
-                            text = dogFullName.toString(),
+                            text = dogFullName?.capitalizeFirstLetter() ?: "",
                             color = MaterialTheme.colorScheme.primary,
                             fontSize = 24.sp,
                             textAlign = TextAlign.Start,
@@ -94,7 +95,7 @@ fun DogDetailsScreen(
                 )
             }
 
-            is DogDetailsViewState.Loading,DogDetailsViewState.Idle  -> {
+            is DogDetailsViewState.Loading, DogDetailsViewState.Idle -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
 

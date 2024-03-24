@@ -85,7 +85,7 @@ class DogRepositoryImplTest {
 
         // Assert
         assertTrue(result is ApiResult.Error)
-        assertEquals(errorMessage, (result as ApiResult.Error).exception?.message)
+        assertEquals(errorMessage, (result as ApiResult.Error).exception.message)
     }
 
     companion object {

@@ -6,5 +6,4 @@ sealed interface DogListIntent {
         val dogBreedName: String,
         val dogName: String,
     ) : DogListIntent
-
 }

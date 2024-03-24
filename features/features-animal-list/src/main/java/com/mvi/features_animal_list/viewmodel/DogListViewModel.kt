@@ -26,6 +26,7 @@ class DogListViewModel @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
+
     private val _dogListState = MutableStateFlow<DogListViewState>(DogListViewState.Idle)
     val dogListState: StateFlow<DogListViewState>
         get() = _dogListState.asStateFlow()

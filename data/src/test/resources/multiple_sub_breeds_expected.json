@@ -1,27 +1,27 @@
 {
   "dogs": [
     {
-      "dogFullName": "Breed1 - sub1",
+      "dogFullName": "breed1 - sub1",
       "dogBreedName": "breed1",
       "dogSubBreedName": "sub1"
     },
     {
-      "dogFullName": "Breed1 - sub2",
+      "dogFullName": "breed1 - sub2",
       "dogBreedName": "breed1",
       "dogSubBreedName": "sub2"
     },
     {
-      "dogFullName": "Breed2 - sub1",
+      "dogFullName": "breed2 - sub1",
       "dogBreedName": "breed2",
       "dogSubBreedName": "sub1"
     },
     {
-      "dogFullName": "Breed2 - sub2",
+      "dogFullName": "breed2 - sub2",
       "dogBreedName": "breed2",
       "dogSubBreedName": "sub2"
     },
     {
-      "dogFullName": "Breed2 - sub3",
+      "dogFullName": "breed2 - sub3",
       "dogBreedName": "breed2",
       "dogSubBreedName": "sub3"
     }
